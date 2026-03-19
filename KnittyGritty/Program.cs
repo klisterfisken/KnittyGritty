@@ -17,7 +17,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthorization();
+//app.UseAuthorization(); - lägg till senare
 
 app.MapStaticAssets();
 app.MapRazorPages()
