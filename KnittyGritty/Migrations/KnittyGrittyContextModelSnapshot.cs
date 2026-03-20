@@ -46,6 +46,23 @@ namespace KnittyGritty.Migrations
 
                     b.ToTable("Designer");
                 });
+
+            modelBuilder.Entity("KnittyGritty.Models.YarnBrand", b =>
+                {
+                    b.Property<int>("YarnBrandID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YarnBrandID"));
+
+                    b.Property<string>("YarnBrandName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("YarnBrandID");
+
+                    b.ToTable("YarnBrand");
+                });
 #pragma warning restore 612, 618
         }
     }

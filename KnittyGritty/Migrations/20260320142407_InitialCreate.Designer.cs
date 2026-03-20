@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KnittyGritty.Migrations
 {
     [DbContext(typeof(KnittyGrittyContext))]
-    [Migration("20260319182129_InitialCreate")]
+    [Migration("20260320142407_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,6 +48,23 @@ namespace KnittyGritty.Migrations
                     b.HasKey("DesignerID");
 
                     b.ToTable("Designer");
+                });
+
+            modelBuilder.Entity("KnittyGritty.Models.YarnBrand", b =>
+                {
+                    b.Property<int>("YarnBrandID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("YarnBrandID"));
+
+                    b.Property<string>("YarnBrandName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("YarnBrandID");
+
+                    b.ToTable("YarnBrand");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,5 +15,6 @@ namespace KnittyGritty.Data
         }
 
         public DbSet<KnittyGritty.Models.Designer> Designer { get; set; } = default!;
+        public DbSet<KnittyGritty.Models.YarnBrand> YarnBrand { get; set; } = default!;
     }
 }
