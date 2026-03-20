@@ -44,9 +44,9 @@
                 @Html.DisplayFor(modelItem => item.Handle)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.DesignerID">Ändra</a> |
-                <a asp-page="./Details" asp-route-id="@item.DesignerID">Detaljer</a> |
-                <a asp-page="./Delete" asp-route-id="@item.DesignerID">Ta bort</a>
+                    <a asp-page="./Edit" asp-route-id="@item.DesignerID"><i class="bi bi-pencil-fill"></i></a>
+                    <a asp-page="./Details" asp-route-id="@item.DesignerID"><i class="bi bi-info-circle-fill"></i></a>
+                    <a asp-page="./Delete" asp-route-id="@item.DesignerID"><i class="bi bi-trash3-fill"></i></a>
             </td>
         </tr>
 }
