@@ -1,0 +1,93 @@
+﻿@page
+@model KnittyGritty.Pages.Patterns.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>Pattern</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Pattern.DesignerID" class="control-label"></label>
+                <select asp-for="Pattern.DesignerID" class ="form-control" asp-items="ViewBag.DesignerID" ></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Title" class="control-label"></label>
+                <input asp-for="Pattern.Title" class="form-control" />
+                <span asp-validation-for="Pattern.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Gauge" class="control-label"></label>
+                <input asp-for="Pattern.Gauge" class="form-control" />
+                <span asp-validation-for="Pattern.Gauge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Needles" class="control-label"></label>
+                <input asp-for="Pattern.Needles" class="form-control" />
+                <span asp-validation-for="Pattern.Needles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Difficulty" class="control-label"></label>
+                <input asp-for="Pattern.Difficulty" class="form-control" />
+                <span asp-validation-for="Pattern.Difficulty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Notes" class="control-label"></label>
+                <input asp-for="Pattern.Notes" class="form-control" />
+                <span asp-validation-for="Pattern.Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.ImageUrl" class="control-label"></label>
+                <input asp-for="Pattern.ImageUrl" class="form-control" />
+                <span asp-validation-for="Pattern.ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.PatternType" class="control-label"></label>
+                <input asp-for="Pattern.PatternType" class="form-control" />
+                <span asp-validation-for="Pattern.PatternType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Source" class="control-label"></label>
+                <input asp-for="Pattern.Source" class="form-control" />
+                <span asp-validation-for="Pattern.Source" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.Craft" class="control-label"></label>
+                <input asp-for="Pattern.Craft" class="form-control" />
+                <span asp-validation-for="Pattern.Craft" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Pattern.MultipleStrands" /> @Html.DisplayNameFor(model => model.Pattern.MultipleStrands)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.OverallYarnWeight" class="control-label"></label>
+                <input asp-for="Pattern.OverallYarnWeight" class="form-control" />
+                <span asp-validation-for="Pattern.OverallYarnWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pattern.GaugePattern" class="control-label"></label>
+                <input asp-for="Pattern.GaugePattern" class="form-control" />
+                <span asp-validation-for="Pattern.GaugePattern" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

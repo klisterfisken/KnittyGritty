@@ -1,0 +1,108 @@
+﻿@page
+@model KnittyGritty.Pages.Patterns.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Designer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Gauge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Needles)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Difficulty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].ImageUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].PatternType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].Craft)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].MultipleStrands)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].OverallYarnWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pattern[0].GaugePattern)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Pattern) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Designer.DesignerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gauge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Needles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Difficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatternType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Craft)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MultipleStrands)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverallYarnWeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GaugePattern)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.PatternID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.PatternID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.PatternID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
