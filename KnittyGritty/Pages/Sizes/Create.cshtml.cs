@@ -38,7 +38,7 @@ namespace KnittyGritty.Pages.Sizes
             _context.Size.Add(Size);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Create");
         }
     }
 }
