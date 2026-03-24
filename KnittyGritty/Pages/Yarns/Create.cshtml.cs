@@ -22,9 +22,9 @@ namespace KnittyGritty.Pages.Yarns
         public IActionResult OnGet()
         {
             ViewData["YarnBrandID"] = new SelectList(
-        _context.YarnBrand.OrderBy(y => y.YarnBrandName),
-        "YarnBrandID",
-        "YarnBrandName");
+                _context.YarnBrand.OrderBy(y => y.YarnBrandName),
+                "YarnBrandID",
+                "YarnBrandName");
             return Page();
         }
 
@@ -37,9 +37,9 @@ namespace KnittyGritty.Pages.Yarns
             if (!ModelState.IsValid)
             {
                 ViewData["YarnBrandID"] = new SelectList(
-            _context.YarnBrand.OrderBy(y => y.YarnBrandName),
-            "YarnBrandID",
-            "YarnBrandName");
+                    _context.YarnBrand.OrderBy(y => y.YarnBrandName),
+                    "YarnBrandID",
+                    "YarnBrandName");
                 return Page();
             }
 

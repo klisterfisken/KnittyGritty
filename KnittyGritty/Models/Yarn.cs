@@ -5,7 +5,7 @@
         public int YarnID { get; set; } // PK
 
         public int YarnBrandID { get; set; } // FK
-        public YarnBrand YarnBrand { get; set; } = null!;
+        public YarnBrand? YarnBrand { get; set; }
 
         public string Name { get; set; } = "";
         public string YarnWeight { get; set; } = "";
