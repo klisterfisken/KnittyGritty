@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,10 +13,10 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-primary mb-3" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-primary mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">KnittyGritty</a>
-                <button class="navbar-toggler" type="button" data-bs-target="#navbarColor01" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-bs-target="#navbarColor01" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -44,6 +44,7 @@
                             <a class="nav-link" asp-area="" asp-page="/Sizes/Index">Storlekar</a>
                         </li>
                     </ul>
+                    <button class="btn btn-light my-2 my-sm-0" id="toggleSwitch"><i class="bi bi-circle-half"></i></button>
                 </div>
             </div>
         </nav>
