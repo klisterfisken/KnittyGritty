@@ -1,4 +1,6 @@
-﻿namespace KnittyGritty.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KnittyGritty.Models
 {
     public class Pattern
     {
@@ -7,17 +9,40 @@
         public int DesignerID { get; set; } // FK
         public Designer Designer { get; set; } = null!;
 
+        [Display(Name = "Namn")]
         public string Title { get; set; } = "";
+
+        [Display(Name = "Masktäthet")]
         public float Gauge { get; set; }
+
+        [Display(Name = "Stickor / Virknål")]
         public float Needles { get; set; }
+
+        [Display(Name = "Svårighetsgrad")]
         public string? Difficulty { get; set; }
+
+        [Display(Name = "Anteckningar")]
         public string? Notes { get; set; }
+
+        [Display(Name = "Bildlänk")]
         public string? ImageUrl { get; set; }
+
+        [Display(Name = "Mönstertyp")]
         public string? PatternType { get; set; }
+
+        [Display(Name = "Källa")]
         public string? Source { get; set; }
+
+        [Display(Name = "Teknik")]
         public string Craft { get; set; } = "";
+
+        [Display(Name = "Flera trådar?")]
         public bool MultipleStrands { get; set; } = false;
+
+        [Display(Name = "Sammanlagd grovlek")]
         public string? OverallYarnWeight { get; set; }
+
+        [Display(Name = "Mönster för masktäthet")]
         public string? GaugePattern { get; set; }
 
         // Navigation collections

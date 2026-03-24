@@ -1,8 +1,12 @@
-﻿namespace KnittyGritty.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KnittyGritty.Models
 {
     public class Category
     {
         public int CategoryID { get; set; } // PK
+
+        [Display(Name = "Kategori")]
         public string CategoryName { get; set; } = "";
 
         // Navigation collection
