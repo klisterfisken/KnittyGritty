@@ -6,6 +6,7 @@ namespace KnittyGritty.Models
     {
         public int PatternID { get; set; } // PK
 
+        [Display(Name = "Designer")]
         public int DesignerID { get; set; } // FK
         public Designer Designer { get; set; } = null!;
 

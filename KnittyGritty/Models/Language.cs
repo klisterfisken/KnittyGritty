@@ -4,6 +4,7 @@ namespace KnittyGritty.Models
 {
     public class Language
     {
+        [Display(Name = "Språk")]
         public int LanguageID { get; set; } // PK
 
         [Display(Name = "Språk")]

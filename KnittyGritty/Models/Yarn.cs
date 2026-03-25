@@ -4,6 +4,7 @@ namespace KnittyGritty.Models
 {
     public class Yarn
     {
+        [Display(Name = "Garn")]
         public int YarnID { get; set; } // PK
 
         [Display(Name ="Märke")]

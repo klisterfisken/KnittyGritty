@@ -4,6 +4,7 @@ namespace KnittyGritty.Models
 {
     public class Designer
     {
+        [Display(Name = "Designer")]
         public int DesignerID { get; set; } // PK
 
         [Display(Name = "Namn")]

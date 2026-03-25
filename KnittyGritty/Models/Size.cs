@@ -4,6 +4,7 @@ namespace KnittyGritty.Models
 {
     public class Size
     {
+        [Display(Name = "Storlek")]
         public int SizeID { get; set; } // PK
 
         [Display(Name = "Storlek")]
