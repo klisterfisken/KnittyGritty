@@ -1,0 +1,50 @@
+﻿namespace KnittyGritty.ViewModels
+{
+    public class CreatePatternViewModel
+    {
+        // Grundinfo
+        public int DesignerID { get; set; }
+        public string Title { get; set; } = "";
+        public float Gauge { get; set; }
+        public float Needles { get; set; }
+        public string? Difficulty { get; set; }
+        public string? Notes { get; set; }
+        public string? ImageUrl { get; set; }
+        public string? PatternType { get; set; }
+        public string? Source { get; set; }
+        public string Craft { get; set; } = "";
+        public bool MultipleStrands { get; set; } = false;
+        public string? OverallYarnWeight { get; set; }
+        public string? GaugePattern { get; set; }
+
+        // Kategorier, språk och garn (enkla val)
+        public List<int> SelectedCategoryIDs { get; set; } = new List<int>();
+        public List<int> SelectedLanguageIDs { get; set; } = new List<int>();
+        public List<int> SelectedYarnIDs { get; set; } = new List<int>();
+
+        // Storlekar med extra data
+        public List<PatternSizeInput> Sizes { get; set; } = new List<PatternSizeInput>();
+
+        // Garnåtgång per storlek
+        public List<PatternSizeYarnInput> SizeYarns { get; set; } = new List<PatternSizeYarnInput>();
+
+    }
+
+    
+    public class PatternSizeInput
+    {
+        public int SizeID { get; set; }
+        public int Circumference { get; set; }
+        public string? Notes { get; set; }
+    }
+
+    public class PatternSizeYarnInput
+    {
+        public int SizeID { get; set; }
+        public int YarnID { get; set; }
+        public float SkeinUsage { get; set; }
+        public int MeterageUsage { get; set; }
+    }
+
+
+}
