@@ -156,5 +156,11 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    
+    <script>
+        const sizeOptions = @Html.Raw(Json.Serialize(Model.SizeList.Select(x => new { value = x.Value, text = x.Text })));
+        const yarnOptions = @Html.Raw(Json.Serialize(Model.YarnList.Select(x => new { value = x.Value, text = x.Text })));
+    </script>
+    
     <script src="~/js/create-pattern.js"></script>
 }
