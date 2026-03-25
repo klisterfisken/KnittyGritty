@@ -18,6 +18,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+var supportedCultures = new[] { new System.Globalization.CultureInfo("en-US") };
+app.UseRequestLocalization(new Microsoft.AspNetCore.Builder.RequestLocalizationOptions
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
+
 app.UseHttpsRedirection();
 
 app.UseRouting();

@@ -8,7 +8,7 @@ namespace KnittyGritty.Models
 
         [Display(Name = "Designer")]
         public int DesignerID { get; set; } // FK
-        public Designer Designer { get; set; } = null!;
+        public Designer? Designer { get; set; }
 
         [Display(Name = "Namn")]
         public string Title { get; set; } = "";

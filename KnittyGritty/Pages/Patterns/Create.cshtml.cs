@@ -21,7 +21,6 @@ namespace KnittyGritty.Pages.Patterns
 
         public IActionResult OnGet()
         {
-        //ViewData["DesignerID"] = new SelectList(_context.Designer, "DesignerID", "DesignerID");
             ViewData["DesignerID"] = new SelectList(
                 _context.Designer.OrderBy(y => y.Name),
                 "DesignerID",
@@ -37,6 +36,10 @@ namespace KnittyGritty.Pages.Patterns
         {
             if (!ModelState.IsValid)
             {
+                ViewData["DesignerID"] = new SelectList(
+                    _context.Designer.OrderBy(y => y.Name),
+                    "DesignerID",
+                    "Name");
                 return Page();
             }
 
