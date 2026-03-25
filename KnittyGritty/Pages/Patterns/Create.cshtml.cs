@@ -7,46 +7,178 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using KnittyGritty.Data;
 using KnittyGritty.Models;
+using KnittyGritty.ViewModels;
 
 namespace KnittyGritty.Pages.Patterns
 {
     public class CreateModel : PageModel
     {
-        private readonly KnittyGritty.Data.KnittyGrittyContext _context;
+        private readonly KnittyGrittyContext _context;
 
-        public CreateModel(KnittyGritty.Data.KnittyGrittyContext context)
+        public CreateModel(KnittyGrittyContext context)
         {
             _context = context;
         }
 
+        //public IActionResult OnGet()
+        //{
+        //    ViewData["DesignerID"] = new SelectList(
+        //        _context.Designer.OrderBy(y => y.Name),
+        //        "DesignerID",
+        //        "Name");
+        //    return Page();
+        //}
+
+        //[BindProperty]
+        //public Pattern Pattern { get; set; } = default!;
+
+        //// For more information, see https://aka.ms/RazorPagesCRUD.
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        ViewData["DesignerID"] = new SelectList(
+        //            _context.Designer.OrderBy(y => y.Name),
+        //            "DesignerID",
+        //            "Name");
+        //        return Page();
+        //    }
+
+        //    _context.Pattern.Add(Pattern);
+        //    await _context.SaveChangesAsync();
+
+        //    return RedirectToPage("./Index");
+        //}
+
+        [BindProperty]
+        public CreatePatternViewModel Input { get; set; } = new CreatePatternViewModel();
+
+        // Listor för dropdowns/checkboxar
+        public SelectList DesignerList { get; set; } = default!;
+        public SelectList CategoryList { get; set; } = default!;
+        public SelectList LanguageList { get; set; } = default!;
+        public SelectList YarnList { get; set; } = default!;
+        public SelectList SizeList { get; set; } = default!;
+
         public IActionResult OnGet()
         {
-            ViewData["DesignerID"] = new SelectList(
-                _context.Designer.OrderBy(y => y.Name),
-                "DesignerID",
-                "Name");
+            PopulateLists();
             return Page();
         }
 
-        [BindProperty]
-        public Pattern Pattern { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                ViewData["DesignerID"] = new SelectList(
-                    _context.Designer.OrderBy(y => y.Name),
-                    "DesignerID",
-                    "Name");
+                PopulateLists();
                 return Page();
             }
 
-            _context.Pattern.Add(Pattern);
+            // Skapa Pattern
+            var pattern = new Pattern
+            {
+                DesignerID = Input.DesignerID,
+                Title = Input.Title,
+                Gauge = Input.Gauge,
+                Needles = Input.Needles,
+                Difficulty = Input.Difficulty,
+                Notes = Input.Notes,
+                ImageUrl = Input.ImageUrl,
+                PatternType = Input.PatternType,
+                Source = Input.Source,
+                Craft = Input.Craft,
+                MultipleStrands = Input.MultipleStrands,
+                OverallYarnWeight = Input.OverallYarnWeight,
+                GaugePattern = Input.GaugePattern
+            };
+
+            _context.Pattern.Add(pattern);
+            await _context.SaveChangesAsync();
+
+            // Kategorier
+            foreach (var categoryId in Input.SelectedCategoryIDs)
+            {
+                _context.PatternCategory.Add(new PatternCategory
+                {
+                    PatternID = pattern.PatternID,
+                    CategoryID = categoryId
+                });
+            }
+
+            // Språk
+            foreach (var languageId in Input.SelectedLanguageIDs)
+            {
+                _context.PatternLanguage.Add(new PatternLanguage
+                {
+                    PatternID = pattern.PatternID,
+                    LanguageID = languageId
+                });
+            }
+
+            // Garn
+            foreach (var yarnId in Input.SelectedYarnIDs)
+            {
+                _context.PatternYarn.Add(new PatternYarn
+                {
+                    PatternID = pattern.PatternID,
+                    YarnID = yarnId
+                });
+            }
+
+            // Storlekar
+            foreach (var size in Input.Sizes)
+            {
+                _context.PatternSize.Add(new PatternSize
+                {
+                    PatternID = pattern.PatternID,
+                    SizeID = size.SizeID,
+                    Circumference = size.Circumference,
+                    Notes = size.Notes
+                });
+            }
+
+            // Garnåtgång per storlek
+            foreach (var sizeYarn in Input.SizeYarns)
+            {
+                _context.PatternSizeYarn.Add(new PatternSizeYarn
+                {
+                    PatternID = pattern.PatternID,
+                    SizeID = sizeYarn.SizeID,
+                    YarnID = sizeYarn.YarnID,
+                    SkeinUsage = sizeYarn.SkeinUsage,
+                    MeterageUsage = sizeYarn.MeterageUsage
+                });
+
+            }
+
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        private void PopulateLists()
+        {
+            DesignerList = new SelectList(
+                _context.Designer.OrderBy(d => d.Name),
+                "DesignerID",
+                "Name");
+            CategoryList = new SelectList(
+                _context.Category.OrderBy(c => c.CategoryName),
+                "CategoryID",
+                "CategoryName");
+            LanguageList = new SelectList(
+                _context.Language.OrderBy(l => l.LanguageName),
+                "LanguageID",
+                "LanguageName");
+            YarnList = new SelectList(
+                _context.Yarn.OrderBy(y => y.Name),
+                "YarnID",
+                "Name");
+            SizeList = new SelectList(
+                _context.Size.OrderBy(s => s.SizeName),
+                "SizeID",
+                "SizeName");
+
         }
     }
 }
