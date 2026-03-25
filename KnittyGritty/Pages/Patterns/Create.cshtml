@@ -2,95 +2,159 @@
 @model KnittyGritty.Pages.Patterns.CreateModel
 
         @{
-        ViewData["Title"] = "Create";
+        ViewData["Title"] = "Lägg till mönster";
         }
         
-        <h1>Create</h1>
-        
-    <h4>Pattern</h4>
+    <h1>Lägg till mönster</h1>
     <hr />
-    <div class="row">
-    <div class="col-md-4">
+
     <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Pattern.DesignerID" class="control-label"></label>
-                <select asp-for="Pattern.DesignerID" class ="form-select" asp-items="ViewBag.DesignerID" >
-                    <option value="" disabled selected>Välj designer</option>
-                </select>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+        <h4>Grundinfo</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Designer</label>
+                    <select asp-for="Input.DesignerID" class ="form-select" asp-items="Model.DesignerList" >
+                        <option value="" disabled selected>Välj designer</option>
+                    </select>
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Namn</label>
+                    <input asp-for="Input.Title" class="form-control" />
+                    <span asp-validation-for="Input.Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Teknik</label>
+                    <input asp-for="Input.Craft" class="form-control" />
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Mönstertyp</label>
+                    <input asp-for="Input.PatternType" class="form-control" />
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Källa</label>
+                    <input asp-for="Input.Source" class="form-control" />
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Svårighetsgrad</label>
+                    <input asp-for="Input.Difficulty" class="form-control" />
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Masktäthet</label>
+                    <input asp-for="Input.Gauge" class="form-control" step="any"/>
+                    <span asp-validation-for="Input.Gauge" class="text-danger"></span>
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Stickor / Virknål</label>
+                    <input asp-for="Input.Needles" class="form-control" step="any"/>
+                    <span asp-validation-for="Input.Needles" class="text-danger"></span>
+                </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Mönster för masktäthet</label>
+                    <input asp-for="Input.GaugePattern" class="form-control" />
+                </div>
+                <div class="mb-3 form-check"> <!-- Ändra class mb-3 till form-group? -->
+                    <input asp-for="Input.MultipleStrands" class="form-check-input" id="multipleStrands"/>
+                    <label asp-for="Input.MultipleStrands" class="form-check-label">Flera trådar?</label>
+                </div>
+                <div class="mb-3 d-none" id="yarnWeightDiv"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Sammanlagd grovlek</label>
+                    <input asp-for="Input.OverallYarnWeight" class="form-control" />
+                </div>
+                    <div class="mb-3"> <!-- Ändra class till form-group? -->
+                        <label class="form-label">Bildlänk</label>
+                        <input asp-for="Input.ImageUrl" class="form-control" />
+                    </div>
+                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                    <label class="form-label">Anteckningar</label>
+                    <input asp-for="Input.Notes" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Title" class="control-label"></label>
-                <input asp-for="Pattern.Title" class="form-control" />
-                <span asp-validation-for="Pattern.Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Gauge" class="control-label"></label>
-                <input asp-for="Pattern.Gauge" class="form-control" step="any"/>
-                <span asp-validation-for="Pattern.Gauge" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Needles" class="control-label"></label>
-                <input asp-for="Pattern.Needles" class="form-control" step="any"/>
-                <span asp-validation-for="Pattern.Needles" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Difficulty" class="control-label"></label>
-                <input asp-for="Pattern.Difficulty" class="form-control" />
-                <span asp-validation-for="Pattern.Difficulty" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Notes" class="control-label"></label>
-                <input asp-for="Pattern.Notes" class="form-control" />
-                <span asp-validation-for="Pattern.Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.ImageUrl" class="control-label"></label>
-                <input asp-for="Pattern.ImageUrl" class="form-control" />
-                <span asp-validation-for="Pattern.ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.PatternType" class="control-label"></label>
-                <input asp-for="Pattern.PatternType" class="form-control" />
-                <span asp-validation-for="Pattern.PatternType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Source" class="control-label"></label>
-                <input asp-for="Pattern.Source" class="form-control" />
-                <span asp-validation-for="Pattern.Source" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.Craft" class="control-label"></label>
-                <input asp-for="Pattern.Craft" class="form-control" />
-                <span asp-validation-for="Pattern.Craft" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Pattern.MultipleStrands" /> @Html.DisplayNameFor(model => model.Pattern.MultipleStrands)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.OverallYarnWeight" class="control-label"></label>
-                <input asp-for="Pattern.OverallYarnWeight" class="form-control" />
-                <span asp-validation-for="Pattern.OverallYarnWeight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pattern.GaugePattern" class="control-label"></label>
-                <input asp-for="Pattern.GaugePattern" class="form-control" />
-                <span asp-validation-for="Pattern.GaugePattern" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Kategorier</h4>
+                @foreach (var item in Model.CategoryList)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input"
+                               name="Input.SelectedCategoryIDs" value="@item.Value"
+                               id="cat_@item.Value" />
+                        <label class="form-check-label" for="cat_@item.Value">@item.Text</label>
+                    </div>
+                }
+            </div>
+            <div class="col-md-4">
+                <h4>Språk</h4>
+                @foreach (var item in Model.LanguageList)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input"
+                               name="Input.SelectedLanguageIDs" value="@item.Value"
+                               id="lang_@item.Value" />
+                        <label class="form-check-label" for="lang_@item.Value">@item.Text</label>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <hr />
+        <h4>Garn</h4>
+        <div class="row">
+            @foreach (var item in Model.YarnList)
+            {
+                <div class="col-md-3 form-check">
+                    <input type="checkbox" class="form-check-input"
+                           name="Input.SelectedYarnIDs" value="@item.Value"
+                           id="yarn_@item.Value" />
+                    <label class="form-check-label" for="yarn_@item.Value">@item.Text</label>
+                </div>
+            }
+        </div>
+
+        <hr />
+        <h4>Storlekar</h4>
+        <table class="table table-bordered table-sm" id="sizes-table">
+            <thead>
+                <tr>
+                    <th>Storlek</th>
+                    <th>Övervidd (cm)</th>
+                    <th>Anteckningar</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="sizes-body"></tbody>
+        </table>
+        <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeBtn">+ Lägg till storlek</button>
+
+        <hr />
+        <h4>Garnåtgång per storlek</h4>
+        <table class="table table-bordered table-sm" id="sizeYarns-table">
+            <thead>
+                <tr>
+                    <th>Storlek</th>
+                    <th>Garn</th>
+                    <th>Antal nystan</th>
+                    <th>Meter</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="sizeYarns-body"></tbody>
+        </table>
+        <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeYarnBtn">+ Lägg till garnåtgång</button>
+
+        <hr />
+        <div class="mb-4">
+            <input type="submit" value="Spara mönster" class="btn btn-primary" />
+            <a asp-page="Index" class="btn btn-outline-secondary ms-2">Avbryt</a>
+        </div>
+    </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/create-pattern.js"></script>
 }
