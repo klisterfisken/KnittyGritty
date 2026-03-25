@@ -1,6 +1,7 @@
 ﻿
 let sizeCounter = 0;
 let sizeYarnCounter = 0;
+let yarnCounter = 0;
 
 function buildSelect(options, name) {
     let html = '<select name="' + name + '" class="form-select form-select-sm">';
@@ -40,6 +41,20 @@ function addSizeYarn() {
         '<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'tr\').remove()">Ta bort</button></td>';
     document.getElementById('sizeYarns-body').appendChild(row);
 }
+
+function addYarn() {
+    const i = yarnCounter++;
+    const row = document.createElement('tr');
+    row.innerHTML =
+        '<td>' +
+        '<input type="hidden" name="Input.SelectedYarnIDs.Index" value="' + i + '" />' +
+        buildSelect(yarnOptions, 'Input.SelectedYarnIDs[' + i + ']') +
+        '</td>' +
+        '<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'tr\').remove()">Ta bort</button></td>';
+    document.getElementById('yarns-body').appendChild(row);
+}
+
+document.getElementById('addYarnBtn').addEventListener('click', addYarn);
 
 document.getElementById('multipleStrands').addEventListener('change', function () {
     document.getElementById('yarnWeightDiv').classList.toggle('d-none', !this.checked);

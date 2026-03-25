@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KnittyGritty.Data;
+using KnittyGritty.Models;
+using KnittyGritty.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KnittyGritty.Data;
-using KnittyGritty.Models;
-using KnittyGritty.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KnittyGritty.Pages.Patterns
 {
@@ -19,36 +20,6 @@ namespace KnittyGritty.Pages.Patterns
         {
             _context = context;
         }
-
-        //public IActionResult OnGet()
-        //{
-        //    ViewData["DesignerID"] = new SelectList(
-        //        _context.Designer.OrderBy(y => y.Name),
-        //        "DesignerID",
-        //        "Name");
-        //    return Page();
-        //}
-
-        //[BindProperty]
-        //public Pattern Pattern { get; set; } = default!;
-
-        //// For more information, see https://aka.ms/RazorPagesCRUD.
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ViewData["DesignerID"] = new SelectList(
-        //            _context.Designer.OrderBy(y => y.Name),
-        //            "DesignerID",
-        //            "Name");
-        //        return Page();
-        //    }
-
-        //    _context.Pattern.Add(Pattern);
-        //    await _context.SaveChangesAsync();
-
-        //    return RedirectToPage("./Index");
-        //}
 
         [BindProperty]
         public CreatePatternViewModel Input { get; set; } = new CreatePatternViewModel();
@@ -162,18 +133,28 @@ namespace KnittyGritty.Pages.Patterns
                 _context.Designer.OrderBy(d => d.Name),
                 "DesignerID",
                 "Name");
+
             CategoryList = new SelectList(
                 _context.Category.OrderBy(c => c.CategoryName),
                 "CategoryID",
                 "CategoryName");
+
             LanguageList = new SelectList(
                 _context.Language.OrderBy(l => l.LanguageName),
                 "LanguageID",
                 "LanguageName");
-            YarnList = new SelectList(
-                _context.Yarn.OrderBy(y => y.Name),
-                "YarnID",
-                "Name");
+
+            var yarns = _context.Yarn
+                .Include(y => y.YarnBrand)
+                .OrderBy(y => y.YarnBrand.YarnBrandName)
+                .ThenBy(y => y.Name)
+                .Select(y => new {
+                    y.YarnID,
+                    DisplayName = y.YarnBrand.YarnBrandName + " – " + y.Name
+                })
+                .ToList();
+            YarnList = new SelectList(yarns, "YarnID", "DisplayName");
+
             SizeList = new SelectList(
                 _context.Size.OrderBy(s => s.SizeName),
                 "SizeID",

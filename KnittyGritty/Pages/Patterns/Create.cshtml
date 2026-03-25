@@ -104,17 +104,16 @@
 
         <hr />
         <h4>Garn</h4>
-        <div class="row">
-            @foreach (var item in Model.YarnList)
-            {
-                <div class="col-md-3 form-check">
-                    <input type="checkbox" class="form-check-input"
-                           name="Input.SelectedYarnIDs" value="@item.Value"
-                           id="yarn_@item.Value" />
-                    <label class="form-check-label" for="yarn_@item.Value">@item.Text</label>
-                </div>
-            }
-        </div>
+        <table class="table table-bordered table-sm" id="yarns-table">
+            <thead>
+                <tr>
+                    <th>Garn</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="yarns-body"></tbody>
+        </table>
+        <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addYarnBtn">+ Lägg till garn</button>
 
         <hr />
         <h4>Storlekar</h4>
