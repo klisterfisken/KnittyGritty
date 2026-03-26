@@ -47,12 +47,14 @@ function addYarn() {
     const row = document.createElement('tr');
     row.innerHTML =
         '<td>' +
-        '<input type="hidden" name="Input.SelectedYarnIDs.Index" value="' + i + '" />' +
-        buildSelect(yarnOptions, 'Input.SelectedYarnIDs[' + i + ']') +
+        '<input type="hidden" name="Input.SelectedYarns.Index" value="' + i + '" />' +
+        buildSelect(yarnOptions, 'Input.SelectedYarns[' + i + '].YarnID') +
         '</td>' +
+        '<td><input type="text" name="Input.SelectedYarns[' + i + '].Color" class="form-control form-control-sm" placeholder="Färg (valfritt)" /></td>' +
         '<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'tr\').remove()">Ta bort</button></td>';
     document.getElementById('yarns-body').appendChild(row);
 }
+
 
 document.getElementById('addYarnBtn').addEventListener('click', addYarn);
 

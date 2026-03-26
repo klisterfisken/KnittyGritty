@@ -87,12 +87,13 @@ namespace KnittyGritty.Pages.Patterns
             }
 
             // Garn
-            foreach (var yarnId in Input.SelectedYarnIDs)
+            foreach (var yarn in Input.SelectedYarns)
             {
                 _context.PatternYarn.Add(new PatternYarn
                 {
                     PatternID = pattern.PatternID,
-                    YarnID = yarnId
+                    YarnID = yarn.YarnID,
+                    Color = yarn.Color
                 });
             }
 

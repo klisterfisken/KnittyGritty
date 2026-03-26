@@ -20,7 +20,9 @@
         // Kategorier, språk och garn (enkla val)
         public List<int> SelectedCategoryIDs { get; set; } = new List<int>();
         public List<int> SelectedLanguageIDs { get; set; } = new List<int>();
-        public List<int> SelectedYarnIDs { get; set; } = new List<int>();
+
+        // Garn med eventuell färg
+        public List<PatternYarnInput> SelectedYarns { get; set; } = new List<PatternYarnInput>();
 
         // Storlekar med extra data
         public List<PatternSizeInput> Sizes { get; set; } = new List<PatternSizeInput>();
@@ -30,7 +32,12 @@
 
     }
 
-    
+    public class PatternYarnInput
+    {
+        public int YarnID { get; set; }
+        public string? Color { get; set; }
+    }
+
     public class PatternSizeInput
     {
         public int SizeID { get; set; }
