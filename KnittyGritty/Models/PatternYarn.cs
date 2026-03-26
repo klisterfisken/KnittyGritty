@@ -4,6 +4,8 @@ namespace KnittyGritty.Models
 {
     public class PatternYarn
     {
+        public int PatternYarnID { get; set; } // PK (surrogate)
+
         [Display(Name = "Mönster")]
         public int PatternID { get; set; } // FK
 
@@ -15,5 +17,8 @@ namespace KnittyGritty.Models
 
         [Display(Name = "Garn")]
         public Yarn Yarn { get; set; } = null!;
+
+        [Display(Name = "Färg")]
+        public string? Color { get; set; }
     }
 }

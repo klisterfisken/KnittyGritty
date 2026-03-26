@@ -38,8 +38,8 @@ namespace KnittyGritty.Data
         modelBuilder.Entity<PatternLanguage>()
         .HasKey(pl => new { pl.PatternID, pl.LanguageID });
 
-        modelBuilder.Entity<PatternYarn>()
-        .HasKey(py => new { py.PatternID, py.YarnID });
+        //modelBuilder.Entity<PatternYarn>()
+        //.HasKey(py => new { py.PatternID, py.YarnID });
 
         modelBuilder.Entity<PatternSize>()
         .HasKey(ps => new { ps.PatternID, ps.SizeID });
