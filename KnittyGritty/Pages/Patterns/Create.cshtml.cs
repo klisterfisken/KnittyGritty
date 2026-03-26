@@ -143,7 +143,7 @@ namespace KnittyGritty.Pages.Patterns
             YarnList = new SelectList(yarns, "YarnID", "DisplayName");
 
             SizeList = new SelectList(
-                _context.Size.OrderBy(s => s.SizeName),
+                _context.Size.OrderBy(s => s.SortOrder),
                 "SizeID",
                 "SizeName");
 

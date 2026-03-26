@@ -32,6 +32,7 @@ namespace KnittyGritty.Pages.Patterns
             PatternSizes = await _context.PatternSize
                 .Where(ps => ps.PatternID == id)
                 .Include(ps => ps.Size)
+                .OrderBy(ps => ps.Size.SortOrder)
                 .ToListAsync();
 
             PatternYarns = await _context.PatternYarn
