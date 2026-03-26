@@ -1,0 +1,40 @@
+﻿@page "{id:int}"
+@model KnittyGritty.Pages.Patterns.AddYarnUsageModel
+
+@{
+    ViewData["Title"] = "Garnåtgång";
+}
+
+<h1>Garnåtgång per storlek</h1>
+<h4>@Model.Pattern.Title</h4>
+<hr />
+
+<form method="post">
+    <table class="table table-bordered table-sm" id="sizeYarns-table">
+        <thead>
+            <tr>
+                <th>Storlek</th>
+                <th>Garn</th>
+                <th>Antal nystan</th>
+                <th>Meter</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="sizeYarns-body"></tbody>
+    </table>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeYarnBtn">+ Lägg till rad</button>
+
+    <hr />
+    <div class="mb-4">
+        <input type="submit" value="Spara" class="btn btn-primary" />
+        <a asp-page="Index" class="btn btn-outline-secondary ms-2">Hoppa över</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        const sizeOptions = @Html.Raw(Json.Serialize(Model.PatternSizes.Select(ps => new { value = ps.SizeID, text = ps.Size.SizeName })));
+        const yarnOptions = @Html.Raw(Json.Serialize(Model.PatternYarns.Select(py => new { value = py.YarnID, text = (py.Color != null ? py.Yarn.Name + " (" + py.Color + ")" : py.Yarn.Name) })));
+    </script>
+    <script src="~/js/add-yarn-usage.js"></script>
+}
