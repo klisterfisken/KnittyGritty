@@ -27,9 +27,6 @@
         // Storlekar med extra data
         public List<PatternSizeInput> Sizes { get; set; } = new List<PatternSizeInput>();
 
-        // Garnåtgång per storlek
-        public List<PatternSizeYarnInput> SizeYarns { get; set; } = new List<PatternSizeYarnInput>();
-
     }
 
     public class PatternYarnInput
@@ -44,14 +41,5 @@
         public int Circumference { get; set; }
         public string? Notes { get; set; }
     }
-
-    public class PatternSizeYarnInput
-    {
-        public int SizeID { get; set; }
-        public int YarnID { get; set; }
-        public float SkeinUsage { get; set; }
-        public int MeterageUsage { get; set; }
-    }
-
 
 }

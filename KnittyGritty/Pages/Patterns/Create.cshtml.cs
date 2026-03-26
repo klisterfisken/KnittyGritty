@@ -109,23 +109,9 @@ namespace KnittyGritty.Pages.Patterns
                 });
             }
 
-            // Garnåtgång per storlek
-            foreach (var sizeYarn in Input.SizeYarns)
-            {
-                _context.PatternSizeYarn.Add(new PatternSizeYarn
-                {
-                    PatternID = pattern.PatternID,
-                    SizeID = sizeYarn.SizeID,
-                    YarnID = sizeYarn.YarnID,
-                    SkeinUsage = sizeYarn.SkeinUsage,
-                    MeterageUsage = sizeYarn.MeterageUsage
-                });
-
-            }
-
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./AddYarnUsage", new { id = pattern.PatternID });
         }
 
         private void PopulateLists()

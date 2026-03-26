@@ -1,6 +1,5 @@
 ﻿
 let sizeCounter = 0;
-let sizeYarnCounter = 0;
 let yarnCounter = 0;
 
 function buildSelect(options, name) {
@@ -27,21 +26,6 @@ function addSize() {
     document.getElementById('sizes-body').appendChild(row);
 }
 
-function addSizeYarn() {
-    const i = sizeYarnCounter++;
-    const row = document.createElement('tr');
-    row.innerHTML =
-        '<td>' +
-        '<input type="hidden" name="Input.SizeYarns.Index" value="' + i + '" />' +
-        buildSelect(sizeOptions, 'Input.SizeYarns[' + i + '].SizeID') +
-        '</td>' +
-        '<td>' + buildSelect(yarnOptions, 'Input.SizeYarns[' + i + '].YarnID') + '</td>' +
-        '<td><input type="number" step="any" name="Input.SizeYarns[' + i + '].SkeinUsage" class="form-control form-control-sm" /></td>' +
-        '<td><input type="number" name="Input.SizeYarns[' + i + '].MeterageUsage" class="form-control form-control-sm" /></td>' +
-        '<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'tr\').remove()">Ta bort</button></td>';
-    document.getElementById('sizeYarns-body').appendChild(row);
-}
-
 function addYarn() {
     const i = yarnCounter++;
     const row = document.createElement('tr');
@@ -63,4 +47,3 @@ document.getElementById('multipleStrands').addEventListener('change', function (
 });
 
 document.getElementById('addSizeBtn').addEventListener('click', addSize);
-document.getElementById('addSizeYarnBtn').addEventListener('click', addSizeYarn);
