@@ -9,10 +9,69 @@
     bool hasCircumference = sizes.Any(ps => ps.Circumference > 0);
 }
 
+<h1>@Model.Pattern.Title</h1>
+<h5 class="text-muted">@Model.Pattern.Designer.Name</h5>
 <div class="row">
     <div class="col">
-        <h1>@Model.Pattern.Title</h1>
-        <h5 class="text-muted">@Model.Pattern.Designer.Name</h5>
+        <hr />
+        <dl class="row">
+            @if (!string.IsNullOrEmpty(Model.Pattern.Craft))
+            {
+                <dt class="col-sm-3">Teknik</dt>
+                <dd class="col-sm-9">@Model.Pattern.Craft</dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.Pattern.PatternType))
+            {
+                <dt class="col-sm-3">Mönstertyp</dt>
+                <dd class="col-sm-9">@Model.Pattern.PatternType</dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.Pattern.Difficulty))
+            {
+                <dt class="col-sm-3">Svårighetsgrad</dt>
+                <dd class="col-sm-9">@Model.Pattern.Difficulty</dd>
+            }
+            @if (!string.IsNullOrEmpty(Model.Pattern.Source))
+            {
+                <dt class="col-sm-3">Källa</dt>
+                <dd class="col-sm-9">@Model.Pattern.Source</dd>
+            }
+            <dt class="col-sm-3">Masktäthet</dt>
+            <dd class="col-sm-9">
+                @Model.Pattern.Gauge m
+                @if (!string.IsNullOrEmpty(Model.Pattern.GaugePattern))
+                {
+                    @Model.Pattern.GaugePattern.ToLower()
+                }
+                = 10 cm
+            </dd>
+
+            <dt class="col-sm-3">Stickor / Virknål</dt>
+            <dd class="col-sm-9">@Model.Pattern.Needles.ToString("F2") mm</dd>
+
+            @if (Model.Pattern.MultipleStrands && !string.IsNullOrEmpty(Model.Pattern.OverallYarnWeight))
+            {
+                <dt class="col-sm-3">Sammanlagd grovlek</dt>
+                <dd class="col-sm-9">@Model.Pattern.OverallYarnWeight</dd>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Pattern.Notes))
+            {
+                <dt class="col-sm-3">Anteckningar</dt>
+                <dd class="col-sm-9">@Model.Pattern.Notes</dd>
+            }
+
+            @if (Model.Pattern.PatternCategories.Any())
+            {
+                <dt class="col-sm-3">Kategorier</dt>
+                <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternCategories.Select(pc => pc.Category.CategoryName))</dd>
+            }
+    
+            @if (Model.Pattern.PatternLanguages.Any())
+            {
+                <dt class="col-sm-3">Språk</dt>
+                <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternLanguages.Select(pl => pl.Language.LanguageName))</dd>
+            }
+        </dl>
     </div>
     @if (!string.IsNullOrEmpty(Model.Pattern.ImageUrl))
     {
@@ -21,67 +80,6 @@
         </div>
     }
 </div>
-
-<hr />
-
-<dl class="row">
-    @if (!string.IsNullOrEmpty(Model.Pattern.Craft))
-    {
-        <dt class="col-sm-3">Teknik</dt>
-        <dd class="col-sm-9">@Model.Pattern.Craft</dd>
-    }
-    @if (!string.IsNullOrEmpty(Model.Pattern.PatternType))
-    {
-        <dt class="col-sm-3">Mönstertyp</dt>
-        <dd class="col-sm-9">@Model.Pattern.PatternType</dd>
-    }
-    @if (!string.IsNullOrEmpty(Model.Pattern.Difficulty))
-    {
-        <dt class="col-sm-3">Svårighetsgrad</dt>
-        <dd class="col-sm-9">@Model.Pattern.Difficulty</dd>
-    }
-    @if (!string.IsNullOrEmpty(Model.Pattern.Source))
-    {
-        <dt class="col-sm-3">Källa</dt>
-        <dd class="col-sm-9">@Model.Pattern.Source</dd>
-    }
-    <dt class="col-sm-3">Masktäthet</dt>
-    <dd class="col-sm-9">
-        @Model.Pattern.Gauge m
-        @if (!string.IsNullOrEmpty(Model.Pattern.GaugePattern))
-        {
-            @Model.Pattern.GaugePattern.ToLower()
-        }
-        = 10 cm
-    </dd>
-
-    <dt class="col-sm-3">Stickor / Virknål</dt>
-    <dd class="col-sm-9">@Model.Pattern.Needles.ToString("F2") mm</dd>
-
-    @if (Model.Pattern.MultipleStrands && !string.IsNullOrEmpty(Model.Pattern.OverallYarnWeight))
-    {
-        <dt class="col-sm-3">Sammanlagd grovlek</dt>
-        <dd class="col-sm-9">@Model.Pattern.OverallYarnWeight</dd>
-    }
-
-    @if(!string.IsNullOrEmpty(Model.Pattern.Notes))
-    {
-        <dt class="col-sm-3">Anteckningar</dt>
-        <dd class="col-sm-9">@Model.Pattern.Notes</dd>
-    }
-
-    @if(Model.Pattern.PatternCategories.Any())
-    {
-        <dt class="col-sm-3">Kategorier</dt>
-        <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternCategories.Select(pc => pc.Category.CategoryName))</dd>
-    }
-    
-    @if (Model.Pattern.PatternLanguages.Any())
-    {
-        <dt class="col-sm-3">Språk</dt>
-        <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternLanguages.Select(pl => pl.Language.LanguageName))</dd>
-    }
-</dl>
 
 @if (yarns.Any())
 {
@@ -98,6 +96,31 @@
             </li>
         }
     </ul>
+}
+
+@if (hasCircumference)
+{
+    <h4 class="mt-4">Storleksguide</h4>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th></th>
+                @foreach (var ps in sizes)
+                {
+                    <th>@ps.Size.SizeName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Övervidd</td>
+                @foreach (var ps in sizes)
+                {
+                    <td>@(ps.Circumference > 0 ? $"{ps.Circumference} cm" : "-")</td>
+                }
+            </tr>
+        </tbody>
+    </table>
 }
 
 @if (sizeYarns.Any())
@@ -132,31 +155,6 @@
                     }
                 </tr>
             }
-        </tbody>
-    </table>
-}
-
-@if (hasCircumference)
-{
-    <h4 class="mt-4">Storleksguide</h4>
-    <table class="table table-bordered table-sm">
-        <thead>
-            <tr>
-                <th></th>
-                @foreach (var ps in sizes)
-                {
-                    <th>@ps.Size.SizeName</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Övervidd</td>
-                @foreach (var ps in sizes)
-                {
-                    <td>@(ps.Circumference > 0 ? $"{ps.Circumference} cm" : "-")</td>
-                }
-            </tr>
         </tbody>
     </table>
 }
