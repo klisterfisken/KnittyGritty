@@ -23,6 +23,9 @@ namespace KnittyGritty.Pages.Patterns
         [BindProperty]
         public Pattern Pattern { get; set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? ReturnUrl { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -67,6 +70,8 @@ namespace KnittyGritty.Pages.Patterns
                 }
             }
 
+            if (!string.IsNullOrEmpty(ReturnUrl))
+                return Redirect(ReturnUrl);
             return RedirectToPage("./Index");
         }
 

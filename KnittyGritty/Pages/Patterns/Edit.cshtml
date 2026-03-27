@@ -79,6 +79,7 @@
                 <input asp-for="Pattern.GaugePattern" class="form-control" />
                 <span asp-validation-for="Pattern.GaugePattern" class="text-danger"></span>
             </div>
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
