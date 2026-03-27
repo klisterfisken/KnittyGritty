@@ -2,13 +2,13 @@
 @model KnittyGritty.Pages.Patterns.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Pattern.Title;
 }
 
-<h1>Details</h1>
+<h1>@Model.Pattern.Title</h1>
 
 <div>
-    <h4>Pattern</h4>
+    <h4>Detaljer</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
