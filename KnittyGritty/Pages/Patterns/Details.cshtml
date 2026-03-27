@@ -71,6 +71,23 @@
                 <dt class="col-sm-3">Språk</dt>
                 <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternLanguages.Select(pl => pl.Language.LanguageName))</dd>
             }
+
+            @if (yarns.Any())
+            {
+                <dt class="col-sm-3 mt-3">Garn</dt>
+                <dd class="col-sm-9 mt-3">
+                    @foreach (var py in yarns)
+                    {
+                        <div>
+                            @py.Yarn.YarnBrand.YarnBrandName @py.Yarn.Name
+                            @if (!string.IsNullOrEmpty(py.Color))
+                            {
+                                <span class="text-muted">(@py.Color)</span>
+                            }
+                        </div>
+                    }
+                </dd>
+            }
         </dl>
     </div>
     @if (!string.IsNullOrEmpty(Model.Pattern.ImageUrl))
@@ -80,23 +97,6 @@
         </div>
     }
 </div>
-
-@if (yarns.Any())
-{
-    <h4 class="mt-4">Garn</h4>
-    <ul>
-        @foreach (var py in yarns)
-        {
-            <li>
-                @py.Yarn.YarnBrand.YarnBrandName - @py.Yarn.Name
-                @if (!string.IsNullOrEmpty(py.Color))
-                {
-                    <span class="text-muted">(@py.Color)</span>
-                }
-            </li>
-        }
-    </ul>
-}
 
 @if (hasCircumference)
 {
@@ -141,7 +141,7 @@
             {
                 <tr>
                     <td>
-                        @yarn.Yarn.YarnBrand.YarnBrandName - @yarn.Yarn.Name
+                        @yarn.Yarn.YarnBrand.YarnBrandName @yarn.Yarn.Name
                         @if (!string.IsNullOrEmpty(yarn.Color))
                         {
                             <span class="text-muted">(@yarn.Color)</span>
