@@ -56,7 +56,7 @@
     </dd>
 
     <dt class="col-sm-3">Stickor / Virknål</dt>
-    <dd class="col-sm-9">@Model.Pattern.Needles</dd>
+    <dd class="col-sm-9">@Model.Pattern.Needles.ToString("F2") mm</dd>
 
     @if (Model.Pattern.MultipleStrands && !string.IsNullOrEmpty(Model.Pattern.OverallYarnWeight))
     {
@@ -114,7 +114,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var yarn in sizeYarns.Select(psy => new { psy.YarnID, psy.Yarn, psy.Color }).DistinctBy(x => new { x.YarnID, x.Color })) // Vi har glömt inkludera Color i PatternSizeYarn!
+            @foreach (var yarn in sizeYarns.Select(psy => new { psy.YarnID, psy.Yarn, psy.Color }).DistinctBy(x => new { x.YarnID, x.Color }))
             {
                 <tr>
                     <td>
@@ -162,6 +162,6 @@
 }
 
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Pattern.PatternID" class="btn btn-outline-secondary btn-sm">Redigera</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.Pattern.PatternID" class="btn btn-outline-secondary btn-sm">Redigera</a>
     <a asp-page="./Index" class="btn btn-outline-secondary btn-sm ms-2">Tillbaka</a>
 </div>

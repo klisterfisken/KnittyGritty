@@ -28,5 +28,8 @@ namespace KnittyGritty.Models
 
         [Display(Name = "Åtgång i meter")]
         public int MeterageUsage { get; set; }
+
+        [Display(Name = "Färg")]
+        public string? Color { get; set; }
     }
 }
