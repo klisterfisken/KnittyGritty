@@ -24,7 +24,10 @@ namespace KnittyGritty.Pages.Patterns
         public async Task OnGetAsync()
         {
             Pattern = await _context.Pattern
-                .Include(p => p.Designer).ToListAsync();
+                .Include(p => p.Designer)
+                .Include(p => p.PatternCategories)
+                    .ThenInclude(pc => pc.Category)
+                .ToListAsync();
         }
     }
 }

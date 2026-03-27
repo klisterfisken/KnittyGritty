@@ -2,6 +2,12 @@
 <html lang="en" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
+    <script>
+            (function () {
+                var theme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-bs-theme', theme);
+            })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - KnittyGritty</title>
     <script type="importmap"></script>

@@ -6,103 +6,70 @@
 }
 
 <h1>Mönster</h1>
-
 <p>
     <a class="btn btn-secondary" asp-page="Create">Lägg till</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Designer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Gauge)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Needles)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Difficulty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].ImageUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].PatternType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Source)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].Craft)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].MultipleStrands)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].OverallYarnWeight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pattern[0].GaugePattern)
-            </th>
+            <th>Bild</th>
+            <th>Namn</th>
+            <th>Teknik</th>
+            <th>Kategori</th>
+            <th>Mönstertyp</th>
+            <th>Designer</th>
+            <th>Masktäthet</th>
+            <th>Stickor / Virknål</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Pattern) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Designer.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gauge)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Needles)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Difficulty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PatternType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Source)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Craft)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MultipleStrands)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OverallYarnWeight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GaugePattern)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.PatternID"><i class="bi bi-pencil-fill"></i></a>
-                <a asp-page="./Details" asp-route-id="@item.PatternID"><i class="bi bi-info-circle-fill"></i></a>
-                <a asp-page="./Delete" asp-route-id="@item.PatternID"><i class="bi bi-trash3-fill"></i></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Pattern)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <div class="img-preview-wrapper">
+                            <a href="#" class="img-modal-trigger" data-img="@Url.Content(item.ImageUrl)">
+                                <i class="bi bi-image"></i>
+                            </a>
+                            <img src="@Url.Content(item.ImageUrl)" class="img-preview-tooltip" alt="Förhandsgranskning" />
+                        </div>
+                    }
+                </td>
+                <td><strong>@item.Title</strong></td>
+                <td>@item.Craft</td>
+                <td>@string.Join(", ", item.PatternCategories.Select(pc => pc.Category.CategoryName))</td>
+                <td>@item.PatternType</td>
+                <td>@item.Designer.Name</td>
+                <td>@item.Gauge m</td>
+                <td>@item.Needles.ToString("F2") mm</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.PatternID"><i class="bi bi-pencil-fill"></i></a>
+                    <a asp-page="./Details" asp-route-id="@item.PatternID"><i class="bi bi-info-circle-fill"></i></a>
+                    <a asp-page="./Delete" asp-route-id="@item.PatternID"><i class="bi bi-trash3-fill"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- Bildmodal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
+    <script src="~/js/patterns-index.js"></script>
+    }

@@ -29,3 +29,29 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.img-preview-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.img-preview-tooltip {
+    display: none;
+    position: absolute;
+    width: 120px;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    border: 1px solid #ddd;
+    background: white;
+    padding: 2px;
+}
+
+.img-preview-wrapper:hover .img-preview-tooltip {
+    display: block;
+}
+
+[data-bs-theme="dark"] .table {
+    --bs-table-border-color: rgba(255, 255, 255, 0.2);
+}
