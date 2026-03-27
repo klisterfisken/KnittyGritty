@@ -55,3 +55,18 @@ body {
 [data-bs-theme="dark"] .table {
     --bs-table-border-color: rgba(255, 255, 255, 0.2);
 }
+
+.img-zoom-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.img-zoom-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+}
