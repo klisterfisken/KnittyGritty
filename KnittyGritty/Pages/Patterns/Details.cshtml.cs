@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KnittyGritty.Data;
@@ -12,9 +8,9 @@ namespace KnittyGritty.Pages.Patterns
 {
     public class DetailsModel : PageModel
     {
-        private readonly KnittyGritty.Data.KnittyGrittyContext _context;
+        private readonly KnittyGrittyContext _context;
 
-        public DetailsModel(KnittyGritty.Data.KnittyGrittyContext context)
+        public DetailsModel(KnittyGrittyContext context)
         {
             _context = context;
         }
@@ -28,16 +24,20 @@ namespace KnittyGritty.Pages.Patterns
                 return NotFound();
             }
 
-            var pattern = await _context.Pattern.FirstOrDefaultAsync(m => m.PatternID == id);
+            var pattern = await _context.Pattern
+                .Include(p => p.Designer)
+                .Include(p => p.PatternCategories).ThenInclude(pc => pc.Category)
+                .Include(p => p.PatternLanguages).ThenInclude(pl => pl.Language)
+                .Include(p => p.PatternYarns).ThenInclude(py => py.Yarn).ThenInclude(y => y.YarnBrand)
+                .Include(p => p.PatternSizes).ThenInclude(ps => ps.Size)
+                .Include(p => p.PatternSizeYarns).ThenInclude(psy => psy.Yarn).ThenInclude(y => y.YarnBrand)
+                .Include(p => p.PatternSizeYarns).ThenInclude(psy => psy.Size)
+                .FirstOrDefaultAsync(m => m.PatternID == id);
 
-            if (pattern is not null)
-            {
-                Pattern = pattern;
+            if (pattern is null) return NotFound();
 
-                return Page();
-            }
-
-            return NotFound();
+            Pattern = pattern;
+            return Page();
         }
     }
 }

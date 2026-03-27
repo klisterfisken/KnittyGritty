@@ -3,95 +3,165 @@
 
 @{
     ViewData["Title"] = Model.Pattern.Title;
+    var sizes = Model.Pattern.PatternSizes.OrderBy(ps => ps.Size.SortOrder).ToList();
+    var sizeYarns = Model.Pattern.PatternSizeYarns.ToList();
+    var yarns = Model.Pattern.PatternYarns.ToList();
+    bool hasCircumference = sizes.Any(ps => ps.Circumference > 0);
 }
 
-<h1>@Model.Pattern.Title</h1>
+<div class="row">
+    <div class="col">
+        <h1>@Model.Pattern.Title</h1>
+        <h5 class="text-muted">@Model.Pattern.Designer.Name</h5>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.Pattern.ImageUrl))
+    {
+        <div class="col-md-3 text-end">
+            <img src="@Url.Content(Model.Pattern.ImageUrl)" alt="@Model.Pattern.Title" class="img-fluid" />
+        </div>
+    }
+</div>
+
+<hr />
+
+<dl class="row">
+    @if (!string.IsNullOrEmpty(Model.Pattern.Craft))
+    {
+        <dt class="col-sm-3">Teknik</dt>
+        <dd class="col-sm-9">@Model.Pattern.Craft</dd>
+    }
+    @if (!string.IsNullOrEmpty(Model.Pattern.PatternType))
+    {
+        <dt class="col-sm-3">Mönstertyp</dt>
+        <dd class="col-sm-9">@Model.Pattern.PatternType</dd>
+    }
+    @if (!string.IsNullOrEmpty(Model.Pattern.Difficulty))
+    {
+        <dt class="col-sm-3">Svårighetsgrad</dt>
+        <dd class="col-sm-9">@Model.Pattern.Difficulty</dd>
+    }
+    @if (!string.IsNullOrEmpty(Model.Pattern.Source))
+    {
+        <dt class="col-sm-3">Källa</dt>
+        <dd class="col-sm-9">@Model.Pattern.Source</dd>
+    }
+    <dt class="col-sm-3">Masktäthet</dt>
+    <dd class="col-sm-9">
+        @Model.Pattern.Gauge m
+        @if (!string.IsNullOrEmpty(Model.Pattern.GaugePattern))
+        {
+            @Model.Pattern.GaugePattern.ToLower()
+        }
+        = 10 cm
+    </dd>
+
+    <dt class="col-sm-3">Stickor / Virknål</dt>
+    <dd class="col-sm-9">@Model.Pattern.Needles</dd>
+
+    @if (Model.Pattern.MultipleStrands && !string.IsNullOrEmpty(Model.Pattern.OverallYarnWeight))
+    {
+        <dt class="col-sm-3">Sammanlagd grovlek</dt>
+        <dd class="col-sm-9">@Model.Pattern.OverallYarnWeight</dd>
+    }
+
+    @if(!string.IsNullOrEmpty(Model.Pattern.Notes))
+    {
+        <dt class="col-sm-3">Anteckningar</dt>
+        <dd class="col-sm-9">@Model.Pattern.Notes</dd>
+    }
+
+    @if(Model.Pattern.PatternCategories.Any())
+    {
+        <dt class="col-sm-3">Kategorier</dt>
+        <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternCategories.Select(pc => pc.Category.CategoryName))</dd>
+    }
+    
+    @if (Model.Pattern.PatternLanguages.Any())
+    {
+        <dt class="col-sm-3">Språk</dt>
+        <dd class="col-sm-9">@string.Join(", ", Model.Pattern.PatternLanguages.Select(pl => pl.Language.LanguageName))</dd>
+    }
+</dl>
+
+@if (yarns.Any())
+{
+    <h4 class="mt-4">Garn</h4>
+    <ul>
+        @foreach (var py in yarns)
+        {
+            <li>
+                @py.Yarn.YarnBrand.YarnBrandName - @py.Yarn.Name
+                @if (!string.IsNullOrEmpty(py.Color))
+                {
+                    <span class="text-muted">(@py.Color)</span>
+                }
+            </li>
+        }
+    </ul>
+}
+
+@if (sizeYarns.Any())
+{
+    <h4 class="mt-4">Garnåtgång</h4>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Garn</th>
+                @foreach (var ps in sizes)
+                {
+                    <th>@ps.Size.SizeName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var yarn in sizeYarns.Select(psy => new { psy.YarnID, psy.Yarn, psy.Color }).DistinctBy(x => new { x.YarnID, x.Color })) // Vi har glömt inkludera Color i PatternSizeYarn!
+            {
+                <tr>
+                    <td>
+                        @yarn.Yarn.YarnBrand.YarnBrandName - @yarn.Yarn.Name
+                        @if (!string.IsNullOrEmpty(yarn.Color))
+                        {
+                            <span class="text-muted">(@yarn.Color)</span>
+                        }
+                    </td>
+                    @foreach (var ps in sizes)
+                    {
+                        var entry = sizeYarns.FirstOrDefault(psy => psy.YarnID == yarn.YarnID && psy.SizeID == ps.SizeID && psy.Color == yarn.Color);
+                        var meters = entry == null ? 0 : (entry.MeterageUsage > 0 ? entry.MeterageUsage : (int)(entry.SkeinUsage * entry.Yarn.Meterage));
+                        <td>@(meters > 0 ? $"{meters} m" : "-")</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (hasCircumference)
+{
+    <h4 class="mt-4">Storleksguide</h4>
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th></th>
+                @foreach (var ps in sizes)
+                {
+                    <th>@ps.Size.SizeName</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Övervidd</td>
+                @foreach (var ps in sizes)
+                {
+                    <td>@(ps.Circumference > 0 ? $"{ps.Circumference} cm" : "-")</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+}
 
 <div>
-    <h4>Detaljer</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Designer)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Designer.DesignerID)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Gauge)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Gauge)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Needles)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Needles)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Difficulty)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Difficulty)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Notes)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Notes)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.ImageUrl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.ImageUrl)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.PatternType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.PatternType)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Source)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Source)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.Craft)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.Craft)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.MultipleStrands)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.MultipleStrands)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.OverallYarnWeight)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.OverallYarnWeight)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pattern.GaugePattern)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pattern.GaugePattern)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Pattern.PatternID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Pattern.PatternID" class="btn btn-outline-secondary btn-sm">Redigera</a> |
+    <a asp-page="./Index" class="btn btn-outline-secondary btn-sm ms-2">Tillbaka</a>
 </div>
