@@ -5,10 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KnittyGritty.Pages.Patterns
 {
@@ -30,6 +26,8 @@ namespace KnittyGritty.Pages.Patterns
         public SelectList LanguageList { get; set; } = default!;
         public SelectList YarnList { get; set; } = default!;
         public SelectList SizeList { get; set; } = default!;
+        public SelectList YarnBrandList { get; set; } = default!;
+
 
         public IActionResult OnGet()
         {
@@ -137,7 +135,7 @@ namespace KnittyGritty.Pages.Patterns
                 .ThenBy(y => y.Name)
                 .Select(y => new {
                     y.YarnID,
-                    DisplayName = y.YarnBrand.YarnBrandName + " – " + y.Name
+                    DisplayName = y.YarnBrand.YarnBrandName + " " + y.Name
                 })
                 .ToList();
             YarnList = new SelectList(yarns, "YarnID", "DisplayName");
@@ -147,6 +145,10 @@ namespace KnittyGritty.Pages.Patterns
                 "SizeID",
                 "SizeName");
 
+            YarnBrandList = new SelectList(
+                _context.YarnBrand.OrderBy(y => y.YarnBrandName), 
+                "YarnBrandID", 
+                "YarnBrandName");
         }
     }
 }

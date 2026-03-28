@@ -1,142 +1,197 @@
 ﻿@page
 @model KnittyGritty.Pages.Patterns.CreateModel
 
-        @{
-        ViewData["Title"] = "Lägg till mönster";
-        }
+    @{
+    ViewData["Title"] = "Lägg till mönster";
+    }
         
-    <h1>Lägg till mönster</h1>
-    <hr />
+<h1>Lägg till mönster</h1>
+<hr />
 
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <h4>Grundinfo</h4>
-        <div class="row">
-            <div class="col-md-6">
+    <h4>Grundinfo</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Designer</label>
+                <select asp-for="Input.DesignerID" class ="form-select" asp-items="Model.DesignerList" >
+                    <option value="" disabled selected>Välj designer</option>
+                </select>
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Namn</label>
+                <input asp-for="Input.Title" class="form-control" />
+                <span asp-validation-for="Input.Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Teknik</label>
+                <input asp-for="Input.Craft" class="form-control" />
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Mönstertyp</label>
+                <input asp-for="Input.PatternType" class="form-control" />
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Källa</label>
+                <input asp-for="Input.Source" class="form-control" />
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Svårighetsgrad</label>
+                <input asp-for="Input.Difficulty" class="form-control" />
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Masktäthet</label>
+                <input asp-for="Input.Gauge" class="form-control" step="any"/>
+                <span asp-validation-for="Input.Gauge" class="text-danger"></span>
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Stickor / Virknål</label>
+                <input asp-for="Input.Needles" class="form-control" step="any"/>
+                <span asp-validation-for="Input.Needles" class="text-danger"></span>
+            </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Mönster för masktäthet</label>
+                <input asp-for="Input.GaugePattern" class="form-control" />
+            </div>
+            <div class="mb-3 form-check"> <!-- Ändra class mb-3 till form-group? -->
+                <input asp-for="Input.MultipleStrands" class="form-check-input" id="multipleStrands"/>
+                <label asp-for="Input.MultipleStrands" class="form-check-label">Flera trådar?</label>
+            </div>
+            <div class="mb-3 d-none" id="yarnWeightDiv"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Sammanlagd grovlek</label>
+                <input asp-for="Input.OverallYarnWeight" class="form-control" />
+            </div>
                 <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Designer</label>
-                    <select asp-for="Input.DesignerID" class ="form-select" asp-items="Model.DesignerList" >
-                        <option value="" disabled selected>Välj designer</option>
+                    <label class="form-label">Bildlänk</label>
+                    <input asp-for="Input.ImageUrl" class="form-control" />
+                </div>
+            <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <label class="form-label">Anteckningar</label>
+                <input asp-for="Input.Notes" class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Kategorier</h4>
+            @foreach (var item in Model.CategoryList)
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                            name="Input.SelectedCategoryIDs" value="@item.Value"
+                            id="cat_@item.Value" />
+                    <label class="form-check-label" for="cat_@item.Value">@item.Text</label>
+                </div>
+            }
+        </div>
+        <div class="col-md-4">
+            <h4>Språk</h4>
+            @foreach (var item in Model.LanguageList)
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                            name="Input.SelectedLanguageIDs" value="@item.Value"
+                            id="lang_@item.Value" />
+                    <label class="form-check-label" for="lang_@item.Value">@item.Text</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+    <h4>Garn</h4>
+    <table class="table table-bordered table-sm" id="yarns-table">
+        <thead>
+            <tr>
+                <th>Garn</th>
+                <th>Färg</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="yarns-body"></tbody>
+    </table>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addYarnBtn">+ Ny rad</button>
+    <button type="button" class="btn btn-primary btn-sm mb-3 ms-2" data-bs-toggle="modal" data-bs-target="#createYarnModal">Skapa nytt garn</button>
+
+    <hr />
+    <h4>Storlekar</h4>
+    <table class="table table-bordered table-sm" id="sizes-table">
+        <thead>
+            <tr>
+                <th>Storlek</th>
+                <th>Övervidd (cm)</th>
+                <th>Anteckningar</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="sizes-body"></tbody>
+    </table>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeBtn">+ Lägg till storlek</button>
+
+    <hr />
+    <div class="mb-4">
+        <input type="submit" value="Spara mönster" class="btn btn-primary" />
+        <a asp-page="Index" class="btn btn-outline-secondary ms-2">Avbryt</a>
+    </div>
+</form>
+
+<div class="modal fade" id="createYarnModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Skapa nytt garn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Garnmärke</label>
+                    <select id="yarnBrandSelect" class="form-select">
+                        <option value="">-- Välj märke --</option>
+                        @foreach (var item in Model.YarnBrandList)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                        <option value="new">+ Nytt märke</option>
                     </select>
                 </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
+                <div class="mb-3 d-none" id="newBrandDiv">
+                    <label class="form-label">Nytt garnmärke</label>
+                    <input type="text" id="newBrandNameInYarnModal" class="form-control" />
+                </div>
+                <div class="mb-3">
                     <label class="form-label">Namn</label>
-                    <input asp-for="Input.Title" class="form-control" />
-                    <span asp-validation-for="Input.Title" class="text-danger"></span>
+                    <input type="text" id="newYarnName" class="form-control" />
                 </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Teknik</label>
-                    <input asp-for="Input.Craft" class="form-control" />
+                <div class="mb-3">
+                    <label class="form-label">Grovlek</label>
+                    <input type="text" id="newYarnWeight" class="form-control" />
                 </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Mönstertyp</label>
-                    <input asp-for="Input.PatternType" class="form-control" />
+                <div class="mb-3">
+                    <label class="form-label">Vikt</label>
+                    <input type="number" id="newYarnUnitWeight" class="form-control" />
                 </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Källa</label>
-                    <input asp-for="Input.Source" class="form-control" />
+                <div class="mb-3">
+                    <label class="form-label">Löplängd</label>
+                    <input type="number" id="newYarnMeterage" class="form-control" />
                 </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Svårighetsgrad</label>
-                    <input asp-for="Input.Difficulty" class="form-control" />
+                <div class="mb-3">
+                    <label class="form-label">Innehåll</label>
+                    <input type="text" id="newYarnFiberContent" class="form-control" />
                 </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Masktäthet</label>
-                    <input asp-for="Input.Gauge" class="form-control" step="any"/>
-                    <span asp-validation-for="Input.Gauge" class="text-danger"></span>
-                </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Stickor / Virknål</label>
-                    <input asp-for="Input.Needles" class="form-control" step="any"/>
-                    <span asp-validation-for="Input.Needles" class="text-danger"></span>
-                </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Mönster för masktäthet</label>
-                    <input asp-for="Input.GaugePattern" class="form-control" />
-                </div>
-                <div class="mb-3 form-check"> <!-- Ändra class mb-3 till form-group? -->
-                    <input asp-for="Input.MultipleStrands" class="form-check-input" id="multipleStrands"/>
-                    <label asp-for="Input.MultipleStrands" class="form-check-label">Flera trådar?</label>
-                </div>
-                <div class="mb-3 d-none" id="yarnWeightDiv"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Sammanlagd grovlek</label>
-                    <input asp-for="Input.OverallYarnWeight" class="form-control" />
-                </div>
-                    <div class="mb-3"> <!-- Ändra class till form-group? -->
-                        <label class="form-label">Bildlänk</label>
-                        <input asp-for="Input.ImageUrl" class="form-control" />
-                    </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Anteckningar</label>
-                    <input asp-for="Input.Notes" class="form-control" />
-                </div>
+
+                <div id="yarnModalError" class="text-danger d-none"></div> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
+                <button type="button" class="btn btn-primary" id="saveYarnBtn">Spara</button>
             </div>
         </div>
-
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Kategorier</h4>
-                @foreach (var item in Model.CategoryList)
-                {
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input"
-                               name="Input.SelectedCategoryIDs" value="@item.Value"
-                               id="cat_@item.Value" />
-                        <label class="form-check-label" for="cat_@item.Value">@item.Text</label>
-                    </div>
-                }
-            </div>
-            <div class="col-md-4">
-                <h4>Språk</h4>
-                @foreach (var item in Model.LanguageList)
-                {
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input"
-                               name="Input.SelectedLanguageIDs" value="@item.Value"
-                               id="lang_@item.Value" />
-                        <label class="form-check-label" for="lang_@item.Value">@item.Text</label>
-                    </div>
-                }
-            </div>
-        </div>
-
-        <hr />
-        <h4>Garn</h4>
-        <table class="table table-bordered table-sm" id="yarns-table">
-            <thead>
-                <tr>
-                    <th>Garn</th>
-                    <th>Färg</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="yarns-body"></tbody>
-        </table>
-        <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addYarnBtn">+ Lägg till garn</button>
-
-        <hr />
-        <h4>Storlekar</h4>
-        <table class="table table-bordered table-sm" id="sizes-table">
-            <thead>
-                <tr>
-                    <th>Storlek</th>
-                    <th>Övervidd (cm)</th>
-                    <th>Anteckningar</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="sizes-body"></tbody>
-        </table>
-        <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeBtn">+ Lägg till storlek</button>
-
-        <hr />
-        <div class="mb-4">
-            <input type="submit" value="Spara mönster" class="btn btn-primary" />
-            <a asp-page="Index" class="btn btn-outline-secondary ms-2">Avbryt</a>
-        </div>
-    </form>
+    </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
@@ -144,6 +199,7 @@
     <script>
         const sizeOptions = @Html.Raw(Json.Serialize(Model.SizeList.Select(x => new { value = x.Value, text = x.Text })));
         const yarnOptions = @Html.Raw(Json.Serialize(Model.YarnList.Select(x => new { value = x.Value, text = x.Text })));
+        const yarnBrandOptions = @Html.Raw(Json.Serialize(Model.YarnBrandList.Select(x => new { value = x.Value, text = x.Text })));
     </script>
     
     <script src="~/js/create-pattern.js"></script>
