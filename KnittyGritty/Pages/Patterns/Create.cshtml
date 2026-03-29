@@ -16,11 +16,11 @@
         <div class="col-md-6">
             <div class="mb-3"> <!-- Ändra class till form-group? -->
                 <label class="form-label">Designer</label>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 align-items-center">
                     <select asp-for="Input.DesignerID" class ="form-select" asp-items="Model.DesignerList" >
                         <option value="" disabled selected>Välj designer</option>
                     </select>
-                    <button type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#createDesignerModal">Skapa ny designer</button>
+                    <button type="button" class="btn btn-primary btn-sm text-nowrap" data-bs-toggle="modal" data-bs-target="#createDesignerModal">Skapa ny designer</button>
                 </div>
             </div>
             <div class="mb-3"> <!-- Ändra class till form-group? -->
@@ -133,7 +133,8 @@
         </thead>
         <tbody id="sizes-body"></tbody>
     </table>
-    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeBtn">+ Lägg till storlek</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" id="addSizeBtn">+ Ny rad</button>
+    <button type="button" class="btn btn-primary btn-sm mb-3 ms-2" data-bs-toggle="modal" data-bs-target="#createSizeModal">Skapa ny storlek</button>
 
     <hr />
     <div class="mb-4">
@@ -229,6 +230,29 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="createSizeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Skapa ny storlek</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Storlek</label>
+                    <input type="text" id="newSizeName" class="form-control" />
+                </div>
+                <div id="sizeModalError" class="text-danger d-none"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
+                <button type="button" class="btn btn-primary" id="saveSizeBtn">Spara</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }

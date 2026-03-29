@@ -205,3 +205,55 @@ document.getElementById('saveDesignerBtn').addEventListener('click', async funct
         errorDiv.classList.remove('d-none');
     }
 });
+
+document.getElementById('saveSizeBtn').addEventListener('click', async function () {
+    const errorDiv = document.getElementById('sizeModalError');
+    const nameInput = document.getElementById('newSizeName');
+    const name = nameInput.value.trim();
+
+    if (!name) {
+        errorDiv.textContent = 'Namn krävs.';
+        errorDiv.classList.remove('d-none');
+        return;
+    }
+
+    errorDiv.classList.add('d-none');
+
+    const formData = new FormData();
+    formData.append('__RequestVerificationToken', document.querySelector('input[name="__RequestVerificationToken"]').value);
+    formData.append('SizeName', name);
+
+    const response = await fetch('/Sizes/CreateModal', {
+        method: 'POST',
+        body: formData
+    });
+
+    if (response.ok) {
+        const size = await response.json();
+
+        sizeOptions.push({ value: size.id, text: size.name });
+        sizeOptions.sort(function (a, b) {
+            return a.text.localeCompare(b.text, 'sv');
+        });
+
+        document.querySelectorAll('#sizes-body select').forEach(function (select) {
+            const option = document.createElement('option');
+            option.value = size.id;
+            option.textContent = size.name;
+
+            const options = Array.from(select.options);
+            const insertBefore = options.find(o => o.text.localeCompare(size.name, 'sv') > 0);
+            if (insertBefore) {
+                select.insertBefore(option, insertBefore);
+            } else {
+                select.appendChild(option);
+            }
+        });
+
+        nameInput.value = '';
+        bootstrap.Modal.getInstance(document.getElementById('createSizeModal')).hide();
+    } else {
+        errorDiv.textContent = 'Något gick fel. Försök igen.';
+        errorDiv.classList.remove('d-none');
+    }
+});
