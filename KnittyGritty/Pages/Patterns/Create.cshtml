@@ -16,9 +16,12 @@
         <div class="col-md-6">
             <div class="mb-3"> <!-- Ändra class till form-group? -->
                 <label class="form-label">Designer</label>
-                <select asp-for="Input.DesignerID" class ="form-select" asp-items="Model.DesignerList" >
-                    <option value="" disabled selected>Välj designer</option>
-                </select>
+                <div class="d-flex gap-2">
+                    <select asp-for="Input.DesignerID" class ="form-select" asp-items="Model.DesignerList" >
+                        <option value="" disabled selected>Välj designer</option>
+                    </select>
+                    <button type="button" class="btn btn-secondary text-nowrap" data-bs-toggle="modal" data-bs-target="#createDesignerModal">Skapa ny designer</button>
+                </div>
             </div>
             <div class="mb-3"> <!-- Ändra class till form-group? -->
                 <label class="form-label">Namn</label>
@@ -188,6 +191,40 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
                 <button type="button" class="btn btn-primary" id="saveYarnBtn">Spara</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createDesignerModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Skapa ny designer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Namn</label>
+                    <input type="text" id="newDesignerName" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Smeknamn</label>
+                    <input type="text" id="newDesignerAlias" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Hemsida</label>
+                    <input type="text" id="newDesignerWebsite" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Instagram</label>
+                    <input type="text" id="newDesignerHandle" class="form-control" />
+                </div>
+                <div id="designerModalError" class="text-danger d-none"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
+                <button type="button" class="btn btn-primary" id="saveDesignerBtn">Spara</button>
             </div>
         </div>
     </div>
