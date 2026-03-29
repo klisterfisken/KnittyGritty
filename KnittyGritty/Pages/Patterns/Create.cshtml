@@ -255,13 +255,19 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script>
         const sizeOptions = @Html.Raw(Json.Serialize(Model.SizeList.Select(x => new { value = x.Value, text = x.Text })));
         const yarnOptions = @Html.Raw(Json.Serialize(Model.YarnList.Select(x => new { value = x.Value, text = x.Text })));
         const yarnBrandOptions = @Html.Raw(Json.Serialize(Model.YarnBrandList.Select(x => new { value = x.Value, text = x.Text })));
     </script>
-    
+
     <script src="~/js/create-pattern.js"></script>
+    <script src="~/js/modal-yarn.js"></script>
+    <script src="~/js/modal-designer.js"></script>
+    <script src="~/js/modal-size.js"></script>
 }
+
