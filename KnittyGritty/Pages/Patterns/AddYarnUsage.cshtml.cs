@@ -18,6 +18,8 @@ namespace KnittyGritty.Pages.Patterns
         public Pattern Pattern { get; set; } = default!;
         public List<PatternSize> PatternSizes { get; set; } = new List<PatternSize>();
         public List<PatternYarn> PatternYarns { get; set; } = new List<PatternYarn>();
+        public List<ExistingEntryDto> ExistingEntries { get; set; } = new();
+
 
         [BindProperty]
         public List<PatternSizeYarnInput> SizeYarns { get; set; } = new List<PatternSizeYarnInput>();
@@ -44,6 +46,21 @@ namespace KnittyGritty.Pages.Patterns
                 .Include(py => py.Yarn).ThenInclude(y => y.YarnBrand)
                 .ToListAsync();
 
+            var existingSizeYarns = await _context.PatternSizeYarn
+                .Where(psy => psy.PatternID == id)
+                .ToListAsync();
+
+            ExistingEntries = existingSizeYarns.Select(psy => new ExistingEntryDto
+            {
+                SizeID = psy.SizeID,
+                PatternYarnID = PatternYarns
+                    .FirstOrDefault(py => py.YarnID == psy.YarnID && py.Color == psy.Color)
+                    ?.PatternYarnID ?? 0,
+                GramUsage = psy.GramUsage,
+                MeterageUsage = psy.MeterageUsage
+            }).ToList();
+
+
             return Page();
         }
 
@@ -52,6 +69,11 @@ namespace KnittyGritty.Pages.Patterns
             var patternYarns = await _context.PatternYarn
                 .Where(py => py.PatternID == id)
                 .ToListAsync();
+
+            var existing = await _context.PatternSizeYarn
+                .Where(psy => psy.PatternID == id)
+                .ToListAsync();
+            _context.PatternSizeYarn.RemoveRange(existing);
 
             foreach (var entry in SizeYarns)
             {
@@ -79,6 +101,14 @@ namespace KnittyGritty.Pages.Patterns
     }
 
     public class PatternSizeYarnInput
+    {
+        public int SizeID { get; set; }
+        public int PatternYarnID { get; set; }
+        public int GramUsage { get; set; }
+        public int MeterageUsage { get; set; }
+    }
+
+    public class ExistingEntryDto
     {
         public int SizeID { get; set; }
         public int PatternYarnID { get; set; }

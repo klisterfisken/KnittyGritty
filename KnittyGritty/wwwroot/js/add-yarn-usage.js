@@ -10,7 +10,7 @@ function buildSelect(options, name) {
     return html;
 }
 
-function addSizeYarn() {
+function addSizeYarn(prefill) {
     const i = sizeYarnCounter++;
     const row = document.createElement('tr');
     row.innerHTML =
@@ -23,6 +23,21 @@ function addSizeYarn() {
         '<td><input type="number" name="SizeYarns[' + i + '].MeterageUsage" class="form-control form-control-sm" /></td>' +
         '<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'tr\').remove()">Ta bort</button></td>';
     document.getElementById('sizeYarns-body').appendChild(row);
+
+    if (prefill) {
+        row.querySelector('[name$=".SizeID"]').value = prefill.sizeID;
+        row.querySelector('[name$=".PatternYarnID"]').value = prefill.patternYarnID;
+        row.querySelector('[name$=".GramUsage"]').value = prefill.gramUsage;
+        row.querySelector('[name$=".MeterageUsage"]').value = prefill.meterageUsage;
+    }
 }
 
-document.getElementById('addSizeYarnBtn').addEventListener('click', addSizeYarn);
+document.getElementById('addSizeYarnBtn').addEventListener('click', function () {
+    addSizeYarn(null);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    existingEntries.forEach(function (entry) {
+        addSizeYarn(entry);
+    });
+});

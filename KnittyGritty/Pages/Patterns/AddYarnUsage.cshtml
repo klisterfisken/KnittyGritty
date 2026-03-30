@@ -36,6 +36,7 @@
     <script>
         const sizeOptions = @Html.Raw(Json.Serialize(Model.PatternSizes.Select(ps => new { value = ps.SizeID, text = ps.Size.SizeName })));
         const yarnOptions = @Html.Raw(Json.Serialize(Model.PatternYarns.Select(py => new { value = py.PatternYarnID, text = (py.Color != null ? py.Yarn.Name + " (" + py.Color + ")" : py.Yarn.Name) })));
+        const existingEntries = @Html.Raw(Json.Serialize(Model.ExistingEntries));
     </script>
     <script src="~/js/add-yarn-usage.js"></script>
 }
