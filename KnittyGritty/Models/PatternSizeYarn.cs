@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 
 namespace KnittyGritty.Models
 {
     public class PatternSizeYarn
     {
+        public int PatternSizeYarnID { get; set; } // PK
+
         [Display(Name = "Mönster")]
         public int PatternID { get; set; } // FK
 

@@ -44,8 +44,8 @@ namespace KnittyGritty.Data
         modelBuilder.Entity<PatternSize>()
         .HasKey(ps => new { ps.PatternID, ps.SizeID });
 
-        modelBuilder.Entity<PatternSizeYarn>()
-        .HasKey(psy => new { psy.PatternID, psy.SizeID, psy.YarnID });
+        //modelBuilder.Entity<PatternSizeYarn>()
+        //.HasKey(psy => new { psy.PatternID, psy.SizeID, psy.YarnID });
     }
     }
 }

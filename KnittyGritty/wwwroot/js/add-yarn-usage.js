@@ -18,7 +18,7 @@ function addSizeYarn() {
         '<input type="hidden" name="SizeYarns.Index" value="' + i + '" />' +
         buildSelect(sizeOptions, 'SizeYarns[' + i + '].SizeID') +
         '</td>' +
-        '<td>' + buildSelect(yarnOptions, 'SizeYarns[' + i + '].YarnID') + '</td>' +
+        '<td>' + buildSelect(yarnOptions, 'SizeYarns[' + i + '].PatternYarnID') + '</td>' +
         '<td><input type="number" step="any" name="SizeYarns[' + i + '].SkeinUsage" class="form-control form-control-sm" /></td>' +
         '<td><input type="number" name="SizeYarns[' + i + '].MeterageUsage" class="form-control form-control-sm" /></td>' +
         '<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'tr\').remove()">Ta bort</button></td>';

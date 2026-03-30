@@ -37,7 +37,7 @@ namespace KnittyGritty.Pages.Patterns
 
             PatternYarns = await _context.PatternYarn
                 .Where(py => py.PatternID == id)
-                .Include(py => py.Yarn)
+                .Include(py => py.Yarn).ThenInclude(y => y.YarnBrand)
                 .ToListAsync();
 
             return Page();
@@ -45,13 +45,21 @@ namespace KnittyGritty.Pages.Patterns
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            var patternYarns = await _context.PatternYarn
+                .Where(py => py.PatternID == id)
+                .ToListAsync();
+
             foreach (var entry in SizeYarns)
             {
+                var patternYarn = patternYarns.FirstOrDefault(py => py.PatternYarnID == entry.PatternYarnID);
+                if (patternYarn == null) continue;
+
                 _context.PatternSizeYarn.Add(new PatternSizeYarn
                 {
                     PatternID = id,
                     SizeID = entry.SizeID,
-                    YarnID = entry.YarnID,
+                    YarnID = patternYarn.YarnID,
+                    Color = patternYarn.Color,
                     SkeinUsage = entry.SkeinUsage,
                     MeterageUsage = entry.MeterageUsage
                 });
@@ -60,12 +68,13 @@ namespace KnittyGritty.Pages.Patterns
             await _context.SaveChangesAsync();
             return RedirectToPage("./Index");
         }
+
     }
 
     public class PatternSizeYarnInput
     {
         public int SizeID { get; set; }
-        public int YarnID { get; set; }
+        public int PatternYarnID { get; set; }
         public float SkeinUsage { get; set; }
         public int MeterageUsage { get; set; }
     }
