@@ -170,7 +170,12 @@
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Pattern.PatternID"
         asp-route-returnUrl="@Url.Page("./Details", new {id = Model.Pattern.PatternID})"
-        class="btn btn-outline-secondary btn-sm">Redigera</a>
+        class="btn btn-outline-secondary btn-sm">Redigera grundinfo</a>
+    <a asp-page="./AddYarnUsage"
+       asp-route-id="@Model.Pattern.PatternID"
+       asp-route-returnUrl="@Url.Page("./Details", new { id = Model.Pattern.PatternID })"
+       class="btn btn-outline-secondary btn-sm ms-2">Redigera garnåtgång</a>
+
     <a asp-page="./Index" class="btn btn-outline-secondary btn-sm ms-2">Tillbaka</a>
 </div>
 

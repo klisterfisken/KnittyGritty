@@ -22,6 +22,10 @@ namespace KnittyGritty.Pages.Patterns
         [BindProperty]
         public List<PatternSizeYarnInput> SizeYarns { get; set; } = new List<PatternSizeYarnInput>();
 
+        [BindProperty(SupportsGet = true)]
+        public string? ReturnUrl { get; set; }
+
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var pattern = await _context.Pattern.FindAsync(id);
@@ -66,7 +70,10 @@ namespace KnittyGritty.Pages.Patterns
             }
 
             await _context.SaveChangesAsync();
+            if (!string.IsNullOrEmpty(ReturnUrl))
+                return Redirect(ReturnUrl);
             return RedirectToPage("./Index");
+
         }
 
     }
