@@ -1,10 +1,42 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Hem";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1 class="mb-4">Senast tillagda</h1>
+
+@if (Model.RecentPatterns.Any())
+{
+    <div class="row row-cols-2 row-cols-md-4 g-4">
+        @foreach (var pattern in Model.RecentPatterns)
+        {
+            <div class="col">
+                <a asp-page="/Patterns/Details" asp-route-id="@pattern.PatternID" class="text-decoration-none text-body">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(pattern.ImageUrl))
+                        {
+                            <div style="aspect-ratio: 2/3; overflow: hidden;">
+                                <img src="@Url.Content(pattern.ImageUrl)" class="w-100 h-100" alt="@pattern.Title" style="object-fit: cover;" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="aspect-ratio: 2/3;">
+                                <i class="bi bi-image fs-1"></i>
+                            </div>
+                        }
+                        <div class="card-body p-2">
+                            <p class="fw-bold mb-0">@pattern.Title</p>
+                            <p class="text-muted small mb-0">@pattern.Designer?.Name</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-muted">Inga mönster tillagda ännu.</p>
+}

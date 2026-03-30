@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿
 using KnittyGritty.Data;
 using KnittyGritty.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace KnittyGritty.Pages.Patterns
 {
     public class IndexModel : PageModel
     {
-        private readonly KnittyGritty.Data.KnittyGrittyContext _context;
+        private readonly KnittyGrittyContext _context;
 
-        public IndexModel(KnittyGritty.Data.KnittyGrittyContext context)
+        public IndexModel(KnittyGrittyContext context)
         {
             _context = context;
         }
