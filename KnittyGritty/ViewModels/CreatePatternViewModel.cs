@@ -7,9 +7,7 @@
         public string Title { get; set; } = "";
         public float Gauge { get; set; }
         public float Needles { get; set; }
-        public string? Difficulty { get; set; }
         public string? Notes { get; set; }
-        public string? ImageUrl { get; set; }
         public string? PatternType { get; set; }
         public string? Source { get; set; }
         public string Craft { get; set; } = "";

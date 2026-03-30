@@ -1,6 +1,8 @@
 ﻿@page
 @model KnittyGritty.Pages.Patterns.IndexModel
 
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+
 @{
     ViewData["Title"] = "Mönster";
 }
@@ -29,16 +31,23 @@
         {
             <tr>
                 <td>
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    @{
+                        var imgFile = $"p{item.PatternID:D3}.jpg";
+                        var imgPath = System.IO.File.Exists(System.IO.Path.Combine(Env.WebRootPath, "images", imgFile))
+                            ? $"~/images/{imgFile}"
+                            : null;
+                    }
+                    @if (imgPath != null)
                     {
                         <div class="img-preview-wrapper">
-                            <a href="#" class="img-modal-trigger" data-img="@Url.Content(item.ImageUrl)">
+                            <a href="#" class="img-modal-trigger" data-img="@Url.Content(imgPath)">
                                 <i class="bi bi-image"></i>
                             </a>
-                            <img src="@Url.Content(item.ImageUrl)" class="img-preview-tooltip" alt="Förhandsgranskning" />
+                            <img src="@Url.Content(imgPath)" class="img-preview-tooltip" alt="Förhandsgranskning" />
                         </div>
                     }
                 </td>
+
                 <td><strong>@item.Title</strong></td>
                 <td>@item.Craft</td>
                 <td>@string.Join(", ", item.PatternCategories.Select(pc => pc.Category.CategoryName))</td>

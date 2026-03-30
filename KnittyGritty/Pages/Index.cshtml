@@ -1,5 +1,8 @@
 ﻿@page
 @model IndexModel
+
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+
 @{
     ViewData["Title"] = "Hem";
 }
@@ -14,18 +17,25 @@
             <div class="col">
                 <a asp-page="/Patterns/Details" asp-route-id="@pattern.PatternID" class="text-decoration-none text-body">
                     <div class="card h-100">
-                        @if (!string.IsNullOrEmpty(pattern.ImageUrl))
+                        @{
+                            var cardImgFile = $"p{pattern.PatternID:D3}.jpg";
+                            var cardImgPath = System.IO.File.Exists(System.IO.Path.Combine(Env.WebRootPath, "images", cardImgFile))
+                                ? $"~/images/{cardImgFile}"
+                                : null;
+                        }
+                        @if (cardImgPath != null)
                         {
-                            <div style="aspect-ratio: 2/3; overflow: hidden;">
-                                <img src="@Url.Content(pattern.ImageUrl)" class="w-100 h-100" alt="@pattern.Title" style="object-fit: cover;" />
+                            <div style="aspect-ratio: 3/2; overflow: hidden;">
+                                <img src="@Url.Content(cardImgPath)" class="w-100 h-100" alt="@pattern.Title" style="object-fit: cover;" />
                             </div>
                         }
                         else
                         {
-                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="aspect-ratio: 2/3;">
+                            <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="aspect-ratio: 3/2;">
                                 <i class="bi bi-image fs-1"></i>
                             </div>
                         }
+
                         <div class="card-body p-2">
                             <p class="fw-bold mb-0">@pattern.Title</p>
                             <p class="text-muted small mb-0">@pattern.Designer?.Name</p>

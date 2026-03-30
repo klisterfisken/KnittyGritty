@@ -23,54 +23,46 @@
                     <button type="button" class="btn btn-primary btn-sm text-nowrap" data-bs-toggle="modal" data-bs-target="#createDesignerModal">Skapa ny designer</button>
                 </div>
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Namn</label>
                 <input asp-for="Input.Title" class="form-control" />
                 <span asp-validation-for="Input.Title" class="text-danger"></span>
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Teknik</label>
                 <input asp-for="Input.Craft" class="form-control" />
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Mönstertyp</label>
                 <input asp-for="Input.PatternType" class="form-control" />
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Källa</label>
                 <input asp-for="Input.Source" class="form-control" />
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
-                <label class="form-label">Svårighetsgrad</label>
-                <input asp-for="Input.Difficulty" class="form-control" />
-            </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Masktäthet</label>
                 <input asp-for="Input.Gauge" class="form-control" step="any"/>
                 <span asp-validation-for="Input.Gauge" class="text-danger"></span>
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Stickor / Virknål</label>
                 <input asp-for="Input.Needles" class="form-control" step="any"/>
                 <span asp-validation-for="Input.Needles" class="text-danger"></span>
             </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Mönster för masktäthet</label>
                 <input asp-for="Input.GaugePattern" class="form-control" />
             </div>
-            <div class="mb-3 form-check"> <!-- Ändra class mb-3 till form-group? -->
+            <div class="mb-3 form-check">
                 <input asp-for="Input.MultipleStrands" class="form-check-input" id="multipleStrands"/>
                 <label asp-for="Input.MultipleStrands" class="form-check-label">Flera trådar?</label>
             </div>
-            <div class="mb-3 d-none" id="yarnWeightDiv"> <!-- Ändra class till form-group? -->
+            <div class="mb-3 d-none" id="yarnWeightDiv">
                 <label class="form-label">Sammanlagd grovlek</label>
                 <input asp-for="Input.OverallYarnWeight" class="form-control" />
             </div>
-                <div class="mb-3"> <!-- Ändra class till form-group? -->
-                    <label class="form-label">Bildlänk</label>
-                    <input asp-for="Input.ImageUrl" class="form-control" />
-                </div>
-            <div class="mb-3"> <!-- Ändra class till form-group? -->
+            <div class="mb-3">
                 <label class="form-label">Anteckningar</label>
                 <input asp-for="Input.Notes" class="form-control" />
             </div>

@@ -19,14 +19,8 @@ namespace KnittyGritty.Models
         [Display(Name = "Stickor / Virknål")]
         public float Needles { get; set; }
 
-        [Display(Name = "Svårighetsgrad")]
-        public string? Difficulty { get; set; }
-
         [Display(Name = "Anteckningar")]
         public string? Notes { get; set; }
-
-        [Display(Name = "Bildlänk")]
-        public string? ImageUrl { get; set; }
 
         [Display(Name = "Mönstertyp")]
         public string? PatternType { get; set; }

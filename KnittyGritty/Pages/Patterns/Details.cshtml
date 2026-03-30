@@ -1,6 +1,8 @@
 ﻿@page
 @model KnittyGritty.Pages.Patterns.DetailsModel
 
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment Env
+
 @{
     ViewData["Title"] = Model.Pattern.Title;
     var sizes = Model.Pattern.PatternSizes.OrderBy(ps => ps.Size.SortOrder).ToList();
@@ -24,11 +26,6 @@
             {
                 <dt class="col-sm-3">Mönstertyp</dt>
                 <dd class="col-sm-9">@Model.Pattern.PatternType</dd>
-            }
-            @if (!string.IsNullOrEmpty(Model.Pattern.Difficulty))
-            {
-                <dt class="col-sm-3">Svårighetsgrad</dt>
-                <dd class="col-sm-9">@Model.Pattern.Difficulty</dd>
             }
             @if (!string.IsNullOrEmpty(Model.Pattern.Source))
             {
@@ -90,17 +87,23 @@
             }
         </dl>
     </div>
-    @if (!string.IsNullOrEmpty(Model.Pattern.ImageUrl))
+    @{
+        var detailImgFile = $"p{Model.Pattern.PatternID:D3}.jpg";
+        var detailImgExists = System.IO.File.Exists(System.IO.Path.Combine(Env.WebRootPath, "images", detailImgFile));
+        var detailImgPath = detailImgExists ? $"~/images/{detailImgFile}" : null;
+    }
+    @if (detailImgPath != null)
     {
         <div class="col-md-3 text-end">
-            <a href="#" class="img-modal-trigger" data-img="@Url.Content(Model.Pattern.ImageUrl)">
+            <a href="#" class="img-modal-trigger" data-img="@Url.Content(detailImgPath)">
                 <div class="img-zoom-wrapper">
-                    <img src="@Url.Content(Model.Pattern.ImageUrl)" alt="@Model.Pattern.Title" class="img-fluid" />
+                    <img src="@Url.Content(detailImgPath)" alt="@Model.Pattern.Title" class="img-fluid" />
                     <i class="bi bi-zoom-in img-zoom-icon"></i>
                 </div>
             </a>
         </div>
     }
+
 </div>
 
 @if (hasCircumference)
