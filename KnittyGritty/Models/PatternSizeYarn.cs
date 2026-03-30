@@ -24,8 +24,8 @@ namespace KnittyGritty.Models
         [Display(Name = "Garn")]
         public Yarn Yarn { get; set; } = null!;
 
-        [Display(Name = "Åtgång i nystan")]
-        public float SkeinUsage { get; set; }
+        [Display(Name = "Åtgång i gram")]
+        public int GramUsage { get; set; }
 
         [Display(Name = "Åtgång i meter")]
         public int MeterageUsage { get; set; }

@@ -60,7 +60,7 @@ namespace KnittyGritty.Pages.Patterns
                     SizeID = entry.SizeID,
                     YarnID = patternYarn.YarnID,
                     Color = patternYarn.Color,
-                    SkeinUsage = entry.SkeinUsage,
+                    GramUsage = entry.GramUsage,
                     MeterageUsage = entry.MeterageUsage
                 });
             }
@@ -75,7 +75,7 @@ namespace KnittyGritty.Pages.Patterns
     {
         public int SizeID { get; set; }
         public int PatternYarnID { get; set; }
-        public float SkeinUsage { get; set; }
+        public int GramUsage { get; set; }
         public int MeterageUsage { get; set; }
     }
 }

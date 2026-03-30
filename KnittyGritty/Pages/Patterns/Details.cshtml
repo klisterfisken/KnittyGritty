@@ -158,7 +158,7 @@
                     @foreach (var ps in sizes)
                     {
                         var entry = sizeYarns.FirstOrDefault(psy => psy.YarnID == yarn.YarnID && psy.SizeID == ps.SizeID && psy.Color == yarn.Color);
-                        var meters = entry == null ? 0 : (entry.MeterageUsage > 0 ? entry.MeterageUsage : (int)(entry.SkeinUsage * entry.Yarn.Meterage));
+                        var meters = entry == null ? 0 : (entry.MeterageUsage > 0 ? entry.MeterageUsage : (int)((float)entry.GramUsage / entry.Yarn.UnitWeight * entry.Yarn.Meterage));
                         <td>@(meters > 0 ? $"{meters} m" : "-")</td>
                     }
                 </tr>
