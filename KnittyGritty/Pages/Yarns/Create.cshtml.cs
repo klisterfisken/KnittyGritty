@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KnittyGritty.Data;
+using KnittyGritty.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using KnittyGritty.Data;
-using KnittyGritty.Models;
 
 namespace KnittyGritty.Pages.Yarns
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly KnittyGrittyContext _context;
