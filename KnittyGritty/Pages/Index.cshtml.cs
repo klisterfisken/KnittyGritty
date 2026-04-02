@@ -21,7 +21,7 @@ namespace KnittyGritty.Pages
             RecentPatterns = await _context.Pattern
                 .Include(p => p.Designer)
                 .OrderByDescending(p => p.PatternID)
-                .Take(6)
+                .Take(4)
                 .ToListAsync();
         }
     }

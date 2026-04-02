@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +9,9 @@ namespace KnittyGritty.Pages.Yarns
 {
     public class EditModel : PageModel
     {
-        private readonly KnittyGritty.Data.KnittyGrittyContext _context;
+        private readonly KnittyGrittyContext _context;
 
-        public EditModel(KnittyGritty.Data.KnittyGrittyContext context)
+        public EditModel(KnittyGrittyContext context)
         {
             _context = context;
         }

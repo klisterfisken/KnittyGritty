@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using KnittyGritty.Data;
 using KnittyGritty.Models;
 
@@ -12,9 +7,9 @@ namespace KnittyGritty.Pages.Designers
 {
     public class CreateModel : PageModel
     {
-        private readonly KnittyGritty.Data.KnittyGrittyContext _context;
+        private readonly KnittyGrittyContext _context;
 
-        public CreateModel(KnittyGritty.Data.KnittyGrittyContext context)
+        public CreateModel(KnittyGrittyContext context)
         {
             _context = context;
         }

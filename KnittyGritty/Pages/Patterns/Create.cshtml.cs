@@ -100,7 +100,7 @@ namespace KnittyGritty.Pages.Patterns
                 {
                     PatternID = pattern.PatternID,
                     SizeID = size.SizeID,
-                    Circumference = size.Circumference,
+                    Circumference = size.Circumference ?? 0,
                     Notes = size.Notes
                 });
             }

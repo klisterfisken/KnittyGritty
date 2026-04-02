@@ -36,7 +36,7 @@
     public class PatternSizeInput
     {
         public int SizeID { get; set; }
-        public int Circumference { get; set; }
+        public int? Circumference { get; set; }
         public string? Notes { get; set; }
     }
 

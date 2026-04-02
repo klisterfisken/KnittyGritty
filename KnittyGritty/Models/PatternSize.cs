@@ -17,7 +17,7 @@ namespace KnittyGritty.Models
         [Display(Name = "Storlek")]
         public Size Size { get; set; } = null!;
 
-        [Display(Name = "Övervidd")]
+        [Display(Name = "Omkrets")]
         public int Circumference { get; set; }
 
         [Display(Name = "Anteckningar")]

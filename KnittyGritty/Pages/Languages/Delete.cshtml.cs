@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using KnittyGritty.Data;
@@ -12,9 +8,9 @@ namespace KnittyGritty.Pages.Languages
 {
     public class DeleteModel : PageModel
     {
-        private readonly KnittyGritty.Data.KnittyGrittyContext _context;
+        private readonly KnittyGrittyContext _context;
 
-        public DeleteModel(KnittyGritty.Data.KnittyGrittyContext context)
+        public DeleteModel(KnittyGrittyContext context)
         {
             _context = context;
         }

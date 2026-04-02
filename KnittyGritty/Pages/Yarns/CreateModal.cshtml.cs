@@ -59,7 +59,7 @@ namespace KnittyGritty.Pages.Yarns
             return new JsonResult(new
             {
                 id = yarn.YarnID,
-                name = brandName + " – " + yarn.Name,
+                name = brandName + " " + yarn.Name,
                 brandId = yarn.YarnBrandID
             });
         }
