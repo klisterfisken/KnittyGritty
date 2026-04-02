@@ -52,7 +52,7 @@
                     </ul>
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post" class="me-2">
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.Path" method="post" class="me-2">
                             <button type="submit" class="btn btn-secondary my-2 my-sm-0">Logga ut</button>
                         </form>
                     }
