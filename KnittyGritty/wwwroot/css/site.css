@@ -1,6 +1,6 @@
 html {
     font-size: 14px;
-    overflow-y: scroll;
+    scrollbar-gutter: stable;
 }
 
 @media (min-width: 768px) {
@@ -71,3 +71,18 @@ body {
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
     pointer-events: none;
 }
+
+.placeholder-img {
+    background-color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .placeholder-img {
+    background-color: #272b2f;
+}
+
+.card {
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
