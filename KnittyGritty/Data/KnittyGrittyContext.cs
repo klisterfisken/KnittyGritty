@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using KnittyGritty.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace KnittyGritty.Data
 {
-    public class KnittyGrittyContext : DbContext
+    public class KnittyGrittyContext : IdentityDbContext<IdentityUser>
     {
         public KnittyGrittyContext (DbContextOptions<KnittyGrittyContext> options)
             : base(options)
@@ -32,20 +30,16 @@ namespace KnittyGritty.Data
     // Override
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<PatternCategory>()
         .HasKey(pc => new { pc.PatternID, pc.CategoryID });
 
         modelBuilder.Entity<PatternLanguage>()
         .HasKey(pl => new { pl.PatternID, pl.LanguageID });
 
-        //modelBuilder.Entity<PatternYarn>()
-        //.HasKey(py => new { py.PatternID, py.YarnID });
-
         modelBuilder.Entity<PatternSize>()
         .HasKey(ps => new { ps.PatternID, ps.SizeID });
-
-        //modelBuilder.Entity<PatternSizeYarn>()
-        //.HasKey(psy => new { psy.PatternID, psy.SizeID, psy.YarnID });
 
         modelBuilder.Entity<Size>()
         .Property(s => s.SortOrder)
