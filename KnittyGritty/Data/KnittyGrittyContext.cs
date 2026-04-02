@@ -46,6 +46,10 @@ namespace KnittyGritty.Data
 
         //modelBuilder.Entity<PatternSizeYarn>()
         //.HasKey(psy => new { psy.PatternID, psy.SizeID, psy.YarnID });
-    }
+
+        modelBuilder.Entity<Size>()
+        .Property(s => s.SortOrder)
+        .HasColumnType("decimal(6, 2)");
+        }
     }
 }
