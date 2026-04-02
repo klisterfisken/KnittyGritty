@@ -1,11 +1,13 @@
 using KnittyGritty.Data;
 using KnittyGritty.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace KnittyGritty.Pages.Patterns
 {
+    [Authorize]
     public class AddYarnUsageModel : PageModel
     {
         private readonly KnittyGrittyContext _context;

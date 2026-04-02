@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KnittyGritty.Pages.Patterns
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly KnittyGrittyContext _context;

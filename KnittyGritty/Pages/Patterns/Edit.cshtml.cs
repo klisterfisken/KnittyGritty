@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KnittyGritty.Data;
+using KnittyGritty.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using KnittyGritty.Data;
-using KnittyGritty.Models;
 
 namespace KnittyGritty.Pages.Patterns
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly KnittyGrittyContext _context;
