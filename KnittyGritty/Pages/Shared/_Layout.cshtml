@@ -50,6 +50,16 @@
                             <a class="nav-link" asp-area="" asp-page="/Sizes/Index">Storlekar</a>
                         </li>
                     </ul>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post" class="me-2">
+                            <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Logga ut</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-light my-2 my-sm-0 me-2">Logga in</a>
+                    }
                     <button class="btn btn-light my-2 my-sm-0" id="toggleSwitch"><i class="bi bi-circle-half"></i></button>
                 </div>
             </div>

@@ -19,6 +19,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<KnittyGrittyContext>()
 .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -43,5 +49,19 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var config = builder.Configuration;
+    var userName = config["AdminCredentials:UserName"]!;
+    var password = config["AdminCredentials:Password"]!;
+
+    if (await userManager.FindByNameAsync(userName) == null)
+    {
+        var user = new IdentityUser { UserName = userName };
+        await userManager.CreateAsync(user, password);
+    }
+}
 
 app.Run();
