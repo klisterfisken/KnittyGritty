@@ -7,10 +7,20 @@
     ViewData["Title"] = "Mönster";
 }
 
-<h1>Mönster</h1>
-<p>
-    <a class="btn btn-secondary" asp-page="Create">Lägg till</a>
-</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Mönster</h1>
+    <div class="d-flex align-items-center gap-2">
+        <a class="btn btn-secondary" asp-page="Create">Lägg till</a>
+        <div class="btn-group">
+            <button id="btnList" class="btn btn-outline-secondary" title="Listvy">
+                <i class="bi bi-list-ul"></i>
+            </button>
+            <button id="btnGrid" class="btn btn-outline-secondary" title="Gallerivy">
+                <i class="bi bi-grid-3x3-gap-fill"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
 <table class="table">
     <thead>
@@ -47,7 +57,6 @@
                         </div>
                     }
                 </td>
-
                 <td><strong>@item.Title</strong></td>
                 <td>@item.Craft</td>
                 <td>@string.Join(", ", item.PatternCategories.Select(pc => pc.Category.CategoryName))</td>
@@ -64,6 +73,40 @@
         }
     </tbody>
 </table>
+
+<div id="galleryView" class="row row-cols-2 row-cols-md-6 g-3 d-none">
+    @foreach (var item in Model.Pattern)
+    {
+        <div class="col">
+            <a asp-page="./Details" asp-route-id="@item.PatternID" class="text-decoration-none text-body">
+                <div class="card h-100">
+                    @{
+                        var gImgFile = $"p{item.PatternID:D3}.jpg";
+                        var gImgPath = System.IO.File.Exists(System.IO.Path.Combine(Env.WebRootPath, "images", gImgFile))
+                            ? $"~/images/{gImgFile}"
+                            : null;
+                    }
+                    @if (gImgPath != null)
+                    {
+                        <div style="aspect-ratio: 3/4; overflow: hidden;">
+                            <img src="@Url.Content(gImgPath)" class="w-100 h-100" alt="@item.Title" style="object-fit: cover;" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="aspect-ratio: 3/4;">
+                            <i class="bi bi-image fs-1"></i>
+                        </div>
+                    }
+                    <div class="card-body p-2">
+                        <p class="fw-bold mb-0 small">@item.Title</p>
+                        <p class="text-muted small mb-0">@item.Designer.Name</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
 
 <div class="d-flex justify-content-between align-items-center mt-3">
     <div>
@@ -95,15 +138,14 @@
             </a>
         }
     </div>
-<div>
-    <label class="me-1">Visa per sida:</label>
-    <select onchange="window.location.href='?pageIndex=1&pageSize=' + this.value" class="form-select form-select-sm d-inline-block w-auto">
-        <option value="12" selected="@(Model.PageSize == 12)">12</option>
-        <option value="24" selected="@(Model.PageSize == 24)">24</option>
-        <option value="48" selected="@(Model.PageSize == 48)">48</option>
-    </select>
-</div>
-
+    <div>
+        <label class="me-1">Visa per sida:</label>
+        <select onchange="window.location.href='?pageIndex=1&pageSize=' + this.value" class="form-select form-select-sm d-inline-block w-auto">
+            <option value="12" selected="@(Model.PageSize == 12)">12</option>
+            <option value="24" selected="@(Model.PageSize == 24)">24</option>
+            <option value="48" selected="@(Model.PageSize == 48)">48</option>
+        </select>
+    </div>
 </div>
 
 <!-- Bildmodal -->
@@ -120,6 +162,32 @@
     </div>
 </div>
 
-    @section Scripts {
+@section Scripts {
     <script src="~/js/patterns-index.js"></script>
-    }
+
+    <script>
+        const galleryView = document.getElementById('galleryView');
+        const btnList = document.getElementById('btnList');
+        const btnGrid = document.getElementById('btnGrid');
+
+        function setView(view) {
+            if (view === 'grid') {
+                document.querySelector('table').classList.add('d-none');
+                galleryView.classList.remove('d-none');
+                btnGrid.classList.add('active');
+                btnList.classList.remove('active');
+            } else {
+                document.querySelector('table').classList.remove('d-none');
+                galleryView.classList.add('d-none');
+                btnList.classList.add('active');
+                btnGrid.classList.remove('active');
+            }
+            localStorage.setItem('patternView', view);
+        }
+
+        btnList.addEventListener('click', () => setView('list'));
+        btnGrid.addEventListener('click', () => setView('grid'));
+
+        setView(localStorage.getItem('patternView') || 'list');
+    </script>
+}
