@@ -137,6 +137,7 @@
     <table class="table table-bordered table-sm">
         <thead>
             <tr>
+                <th>Grovlek</th>
                 <th>Garn</th>
                 @foreach (var ps in sizes)
                 {
@@ -148,6 +149,7 @@
             @foreach (var yarn in sizeYarns.Select(psy => new { psy.YarnID, psy.Yarn, psy.Color }).DistinctBy(x => new { x.YarnID, x.Color }))
             {
                 <tr>
+                    <td>@yarn.Yarn.YarnWeight</td>
                     <td>
                         @yarn.Yarn.YarnBrand.YarnBrandName @yarn.Yarn.Name
                         @if (!string.IsNullOrEmpty(yarn.Color))

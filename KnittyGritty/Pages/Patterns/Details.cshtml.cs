@@ -32,6 +32,7 @@ namespace KnittyGritty.Pages.Patterns
                 .Include(p => p.PatternSizes).ThenInclude(ps => ps.Size)
                 .Include(p => p.PatternSizeYarns).ThenInclude(psy => psy.Yarn).ThenInclude(y => y.YarnBrand)
                 .Include(p => p.PatternSizeYarns).ThenInclude(psy => psy.Size)
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(m => m.PatternID == id);
 
             if (pattern is null) return NotFound();
