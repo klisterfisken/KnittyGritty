@@ -1,6 +1,6 @@
 # KnittyGritty
 
-A database and Razor Pages CRUD app for keeping track of knitting and crochet patterns. Built to solve a very real problem: patterns scattered across bookmarks, PDFs and notebooks, with no good way to search by what actually matters — yarn weight, needle size, gauge, or which languages a pattern is available in.
+A database and Razor Pages CRUD app for keeping track of knitting and crochet patterns. Built to solve a very real problem: patterns scattered across bookmarks, PDFs and notebooks, with no good way to search by what actually matters - yarn weight, needle size, gauge, or which languages a pattern is available in.
 
 ## What it does
 
